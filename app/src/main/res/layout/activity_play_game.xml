@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <!--游戏界面-->
+        <com.nkcs.yuhao.klotski.KlotskiView
+            android:id="@+id/gameBoard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+        <TextView
+            android:id="@+id/moveTimes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="总计:0"/>
+        <Button
+            android:id="@+id/replay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="replay"
+            android:text="重新开始"/>
+        <Button
+            android:id="@+id/previousState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="lastState"
+            android:text="上一步"/>
+    </LinearLayout>
+
+</LinearLayout>
