@@ -45,6 +45,7 @@ public class KlotskiView extends View
     public void setLevel(int level) {
         // 改变level
         this.level = level;
+        Log.d("hello","level="+level);
         // 根据level调整布局
         initPlayBoard();
     }
