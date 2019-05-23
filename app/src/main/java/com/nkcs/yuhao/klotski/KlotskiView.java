@@ -12,6 +12,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,13 +31,15 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Stack;
 
-public class KlotskiView extends View
+public class KlotskiView extends View implements View.OnTouchListener,GestureDetector.OnGestureListener
 {
     private final int SIZE = 200;
     private int level =1;
     private PlayBoard playBoard ; //当前的游戏板
     public int moveTimes = 0; //移动次数
     public Stack<PlayBoard> states = new Stack<>(); //保存历史状态
+    // 构建手势探测器为gesture对象赋值,监听自定义view
+    GestureDetector mygesture = new GestureDetector(this);
 
     public int getLevel() {
         return level;
@@ -49,8 +52,6 @@ public class KlotskiView extends View
         // 根据level调整布局
         initPlayBoard();
     }
-
-
 
     // 在设置游戏关卡后要改变游戏板
     private void initPlayBoard()
@@ -104,82 +105,8 @@ public class KlotskiView extends View
         super(context,paramAttributeSet);
         // 防止空引用
         playBoard = new PlayBoard(4,5);
-        //下面是加载监听器
-        this.setOnTouchListener(new OnTouchListener()
-        {
-            private int selectedValue = 0;//记录被选中的人物的value
-            private int oritation = 0;//记录移动的方向，0代表不移动
-            int beginX=0,beginY=0,endX=0,endY=0;  //滑动开始，滑动结束的x,y值
-            //onTouch表示单击
-            public boolean onTouch(View view, MotionEvent motion)
-            {
-                // 获取触摸点相对于父View的x,y值
-                switch (motion.getAction())
-                {
-                    case MotionEvent.ACTION_DOWN:
-                        beginX = (int)motion.getX()/SIZE;
-                        beginY = (int)motion.getY()/SIZE;
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        endX = (int)motion.getX()/SIZE;
-                        endY = (int)motion.getY()/SIZE;
-                        // 处理边界异常
-                        if(endX<0)
-                            endX = 0;
-                        else if(endX>3)
-                            endX = 3;
-                        if(endY < 0)
-                            endY = 0;
-                        else if(endY > 4)
-                            endY = 4;
-                        // 确定移动方向
-                        if(endX<beginX)  //对应左移
-                            oritation = 3;
-                        else if(endX>beginX) //对应右移
-                            oritation = 4;
-                        if(endY<beginY) //对应下移
-                            oritation = 1;
-                        else if(endY>beginY) //对应上移
-                            oritation = 2;
-                        Log.d("hello","beginX="+beginX+" beginY="+beginY);
-                        Log.d("hello","endX="+endX+" endY="+endY);
-                        break;
-                }
-
-                Log.d("hello","当前hashcode"+playBoard.hashCode());
-                selectedValue = playBoard.getBoardValue(beginX, beginY); //获取点击的人物块的value
-                Log.d("hello","selectedValue"+selectedValue);
-                if(selectedValue != 0) //selectedValue == 0代表新选择的点是空的，无人物块
-                {
-                    // 获取对应的人物块引用
-                    Fragment selectedFragment = playBoard.fragmentHashtable.get(selectedValue);
-                    boolean result = playBoard.checkMove(selectedFragment,oritation); //检查是否可以移动
-                    if(result) //进行移动操作
-                    {
-                        Log.d("hello","可以移动");
-                        // 移动人物块
-                        try {
-                            // 获取移动后的人物板
-                            playBoard = playBoard.moveFragment(selectedFragment,oritation);
-                            Log.d("hello","成功改变PlayBoard");
-                            // 加入到状态栈
-                            states.push(playBoard);
-                            Log.d("hello","改变后栈大小"+states.size()+"");
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        // 视图重新绘制，onDraw()被调用
-                        view.invalidate();
-                        moveTimes++;//移动次数+1
-                        setSteps(); //改变移动步数
-                        judgeVictory(); //判断移动后是否胜利
-                    }
-                    else
-                        Log.d("hello",oritation+"不能移动");
-                }
-                return true;
-            }
-        });
+        //设置Touch监听
+        this.setOnTouchListener(this);
 
     }
 
@@ -276,7 +203,102 @@ public class KlotskiView extends View
         setMeasuredDimension(SIZE*4, SIZE*5);
     }
 
+    // 实现OnGestureListener接口
+    @Override
+    public boolean onDown(MotionEvent e) {
+        Log.d("hello","onDown触发");
+        return true;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    // 监听滑动事件
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        // e1：第1个ACTION_DOWN MotionEvent 手指摁下的event
+        // e2：最后一个ACTION_MOVE MotionEvent 手指抬起的event
+        // velocityX：X轴上的移动速度（像素/秒）
+        // velocityY：Y轴上的移动速度（像素/秒）
+        Log.d("hello", "onFlying触发");
+
+        int beginX=0,beginY=0;
+        int selectedValue =0; // 选择的人物块的value
+        int oritation = 0; //滑动的方向，不滑动为0
+        beginX = ((int) e1.getX()) / SIZE;
+        beginY = ((int) e1.getY()) / SIZE;
+        selectedValue = playBoard.getBoardValue(beginX, beginY); //获取点击的人物块的value
+        Log.d("hello", "selectedValue" + selectedValue);
+
+        // 确定移动方向
+        if(Math.abs(velocityX) <= Math.abs(velocityY))  //上下移动
+        {
+            if(velocityY<0)
+                oritation = 1; //上
+            else
+                oritation = 2; //下
+        }
+        else
+        {
+            if(velocityX<0)
+                oritation = 3; //左
+            else
+                oritation = 4; //右
+        }
+
+        // 进行移动相关操作
+        if (selectedValue != 0) //selectedValue == 0代表新选择的点是空的，无人物块
+        {
+            // 获取对应的人物块引用
+            Fragment selectedFragment = playBoard.fragmentHashtable.get(selectedValue);
+            boolean result = playBoard.checkMove(selectedFragment, oritation); //检查是否可以移动
+            if (result) //进行移动操作
+            {
+                // 移动人物块
+                try {
+                    // 获取移动后的人物板
+                    playBoard = playBoard.moveFragment(selectedFragment, oritation);
+                    // 加入到状态栈
+                    states.push(playBoard);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // 视图重新绘制，onDraw()被调用
+                invalidate();
+                moveTimes++;//移动次数+1
+                setSteps(); //改变移动步数
+                judgeVictory(); //判断移动后是否胜利
+            } else
+                Log.d("hello", oritation + "不能移动");
+        }
+        return false;
+    }
+
+    // 实现OnTouchListener接口
+    @Override
+    public boolean onTouch(View v, MotionEvent motion) {
+        // 点击事件，返回给mygesture处理
+        return mygesture.onTouchEvent(motion);
+    }
 }
+
 
 class PlayBoard implements Serializable {
 
