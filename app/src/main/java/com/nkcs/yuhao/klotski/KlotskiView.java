@@ -71,10 +71,10 @@ public class KlotskiView extends View
                 newPlayBoard.fragmentHashtable.put(4,new Fragment("Ma Chao", 4, 1, 2, 0, 2, R.drawable.role_machao));
                 newPlayBoard.fragmentHashtable.put(5,new Fragment("Huang Zhong", 5, 1, 2, 3, 0, R.drawable.role_huangzhong));
                 newPlayBoard.fragmentHashtable.put(6,new Fragment("Guan Yu", 6, 2, 1, 1, 2, R.drawable.role_guanyu));
-                newPlayBoard.fragmentHashtable.put(7,new Fragment("Soldier1", 7, 1, 1, 0, 4, R.drawable.role_soldier1));
-                newPlayBoard.fragmentHashtable.put(8,new Fragment("Soldier2", 8, 1, 1, 3, 4, R.drawable.role_soldier2));
-                newPlayBoard.fragmentHashtable.put(9,new Fragment("Soldier3", 9, 1, 1, 1, 3, R.drawable.role_soldier3));
-                newPlayBoard.fragmentHashtable.put(10,new Fragment("Soldier4", 10, 1, 1, 2, 3, R.drawable.role_soldier4));
+                newPlayBoard.fragmentHashtable.put(7,new Fragment("Soldier1", 7, 1, 1, 0, 4, R.drawable.role_soldier));
+                newPlayBoard.fragmentHashtable.put(8,new Fragment("Soldier2", 8, 1, 1, 3, 4, R.drawable.role_soldier));
+                newPlayBoard.fragmentHashtable.put(9,new Fragment("Soldier3", 9, 1, 1, 1, 3, R.drawable.role_soldier));
+                newPlayBoard.fragmentHashtable.put(10,new Fragment("Soldier4", 10, 1, 1, 2, 3, R.drawable.role_soldier));
                 break;
             case 2:
                 // 设置布局，代表10个人物的(x,y)坐标
@@ -313,10 +313,10 @@ class PlayBoard implements Serializable {
         this.fragmentHashtable.put(4,new Fragment("Ma Chao", 4, 1, 2,points[3].x, points[3].y, R.drawable.role_machao));
         this.fragmentHashtable.put(5,new Fragment("Huang Zhong", 5, 1, 2, points[4].x, points[4].y, R.drawable.role_huangzhong));
         this.fragmentHashtable.put(6,new Fragment("Guan Yu", 6, 2, 1,points[5].x, points[5].y, R.drawable.role_guanyu));
-        this.fragmentHashtable.put(7,new Fragment("Soldier1", 7, 1, 1, points[6].x, points[6].y, R.drawable.role_soldier1));
-        this.fragmentHashtable.put(8,new Fragment("Soldier2", 8, 1, 1, points[7].x, points[7].y, R.drawable.role_soldier2));
-        this.fragmentHashtable.put(9,new Fragment("Soldier3", 9, 1, 1, points[8].x, points[8].y, R.drawable.role_soldier3));
-        this.fragmentHashtable.put(10,new Fragment("Soldier4", 10, 1, 1, points[9].x, points[9].y, R.drawable.role_soldier4));
+        this.fragmentHashtable.put(7,new Fragment("Soldier1", 7, 1, 1, points[6].x, points[6].y, R.drawable.role_soldier));
+        this.fragmentHashtable.put(8,new Fragment("Soldier2", 8, 1, 1, points[7].x, points[7].y, R.drawable.role_soldier));
+        this.fragmentHashtable.put(9,new Fragment("Soldier3", 9, 1, 1, points[8].x, points[8].y, R.drawable.role_soldier));
+        this.fragmentHashtable.put(10,new Fragment("Soldier4", 10, 1, 1, points[9].x, points[9].y, R.drawable.role_soldier));
     }
 
     // 为游戏板设置人物块的数值
