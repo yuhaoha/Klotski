@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -34,6 +35,7 @@ import java.util.Stack;
 public class KlotskiView extends View implements View.OnTouchListener,GestureDetector.OnGestureListener
 {
     private final int SIZE = 200;
+    private final int MARGIN = 10;
     private int level =1;
     private PlayBoard playBoard ; //当前的游戏板
     public int moveTimes = 0; //移动次数
@@ -66,16 +68,16 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
         {
             case 1:
                 // 第1关 添加人物
-                newPlayBoard.fragmentHashtable.put(1,new Fragment("Cao Cao", 1, 2, 2, 1, 0, R.drawable.role_caocao));
-                newPlayBoard.fragmentHashtable.put(2,new Fragment("Zhang Fei", 2, 1, 2, 0, 0, R.drawable.role_zhangfei));
-                newPlayBoard.fragmentHashtable.put(3,new Fragment("Zhao Yun", 3 , 1, 2, 3, 2, R.drawable.role_zhaoyun));
-                newPlayBoard.fragmentHashtable.put(4,new Fragment("Ma Chao", 4, 1, 2, 0, 2, R.drawable.role_machao));
-                newPlayBoard.fragmentHashtable.put(5,new Fragment("Huang Zhong", 5, 1, 2, 3, 0, R.drawable.role_huangzhong));
-                newPlayBoard.fragmentHashtable.put(6,new Fragment("Guan Yu", 6, 2, 1, 1, 2, R.drawable.role_guanyu));
-                newPlayBoard.fragmentHashtable.put(7,new Fragment("Soldier1", 7, 1, 1, 0, 4, R.drawable.role_soldier));
-                newPlayBoard.fragmentHashtable.put(8,new Fragment("Soldier2", 8, 1, 1, 3, 4, R.drawable.role_soldier));
-                newPlayBoard.fragmentHashtable.put(9,new Fragment("Soldier3", 9, 1, 1, 1, 3, R.drawable.role_soldier));
-                newPlayBoard.fragmentHashtable.put(10,new Fragment("Soldier4", 10, 1, 1, 2, 3, R.drawable.role_soldier));
+                newPlayBoard.fragmentHashtable.put(1,new Fragment("曹操", 1, 2, 2, 1, 0, R.drawable.role_caocao));
+                newPlayBoard.fragmentHashtable.put(2,new Fragment("张飞", 2, 1, 2, 0, 0, R.drawable.role_zhangfei));
+                newPlayBoard.fragmentHashtable.put(3,new Fragment("赵云", 3 , 1, 2, 3, 2, R.drawable.role_zhaoyun));
+                newPlayBoard.fragmentHashtable.put(4,new Fragment("马超", 4, 1, 2, 0, 2, R.drawable.role_machao));
+                newPlayBoard.fragmentHashtable.put(5,new Fragment("黄忠", 5, 1, 2, 3, 0, R.drawable.role_huangzhong));
+                newPlayBoard.fragmentHashtable.put(6,new Fragment("关羽", 6, 2, 1, 1, 2, R.drawable.role_guanyu));
+                newPlayBoard.fragmentHashtable.put(7,new Fragment("兵", 7, 1, 1, 0, 4, R.drawable.role_soldier));
+                newPlayBoard.fragmentHashtable.put(8,new Fragment("兵", 8, 1, 1, 3, 4, R.drawable.role_soldier));
+                newPlayBoard.fragmentHashtable.put(9,new Fragment("兵", 9, 1, 1, 1, 3, R.drawable.role_soldier));
+                newPlayBoard.fragmentHashtable.put(10,new Fragment("兵", 10, 1, 1, 2, 3, R.drawable.role_soldier));
                 break;
             case 2:
                 // 设置布局，代表10个人物的(x,y)坐标
@@ -164,10 +166,18 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
     }
 
     @Override
-    //涂色
-    //因为贴图，所以无意义
     public void onDraw(Canvas canvas)
     {
+        super.onDraw(canvas);
+        // 为自定义View设置背景
+        this.setBackgroundResource(R.drawable.gameboard_background);
+        // 画胜利区域
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.FILL_AND_STROKE); //描边且填充
+        RectF rect = new RectF(SIZE*1,SIZE*3,SIZE*3,SIZE*5);
+        paint.setARGB(230,255,255,224);
+        canvas.drawRoundRect(rect,50,50,paint);
+        // 依次画每个人物
         Enumeration<Fragment> enumeration = playBoard.fragmentHashtable.elements();
         while(enumeration.hasMoreElements())
         {
@@ -180,23 +190,45 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
     //绘制矩形形状和尺寸
     private void drawFragment(Canvas canvas, Fragment fragment)
     {
+        // 定义一个paint
         Paint paint = new Paint();
-
-        Rect rect = new Rect();//rect表示矩形
-        rect.left = fragment.getxPos() * SIZE;//矩形左侧边界坐标等于位置（0,1,2,3,4）*80，上侧同理
+        paint.setStyle(Paint.Style.FILL_AND_STROKE); //描边且填充
+        // 每个人物块是一个曲边矩形  坐标是相对画布canvas而言的
+        // 绘制人物块
+        // 外层透明矩形
+        RectF rect = new RectF();
+        rect.left = fragment.getxPos() * SIZE;//矩形左侧边界坐标等于位置（0,1,2,3,4）*200，上侧同理
         rect.top = fragment.getyPos() * SIZE;
         rect.right = (fragment.getxPos() + fragment.getWidth()) * SIZE;
         rect.bottom = (fragment.getyPos() + fragment.getHeight()) * SIZE;
+        paint.setColor(Color.TRANSPARENT);  // 颜色设置为透明
+        canvas.drawRoundRect(rect,50,50,paint);
+        // 内层矩形
+        if(fragment.getValue()==1) //曹操设置成绿色
+            paint.setARGB(200,0,250,154);
+        else
+            paint.setARGB(200,203,167,249); // 透明度，RGB
+        rect.left += MARGIN;
+        rect.right -= MARGIN;
+        rect.top += MARGIN;
+        rect.bottom -= MARGIN;
+        canvas.drawRoundRect(rect,50,50,paint);
 
-        // 获取人物对应的图片
-        InputStream is = this.getContext().getResources().openRawResource(fragment.getPicture());
-        @SuppressWarnings("deprecation")
-        BitmapDrawable bmpDraw = new BitmapDrawable(is);//下划线在腰上，疑似旧的API可以被新的代替，但是也能用
-        Bitmap mPic = bmpDraw.getBitmap();
-        canvas.drawBitmap(mPic, null, rect, paint);
+
+//        String name = fragment.getName();
+//        paint.setColor(Color.BLACK);
+//        canvas.drawText(name,fragment.getxPos(),fragment.getyPos(),paint);
+
+//        // 获取人物对应的图片
+//        InputStream is = this.getContext().getResources().openRawResource(fragment.getPicture());
+//        BitmapDrawable bmpDraw = new BitmapDrawable(is);//下划线在腰上，疑似旧的API可以被新的代替，但是也能用
+//        // 生成位图
+//        Bitmap mPic = bmpDraw.getBitmap();
+//        // 绘图
+//        canvas.drawBitmap(mPic, null, rect, paint);
     }
 
-    // 设置组件大小
+     // 设置组件大小
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -481,6 +513,10 @@ class Fragment implements Serializable{
         this.xPos = xPos;
         this.yPos = yPos;
         this.mPicture = mPicture;
+    }
+
+    public String getName(){
+        return this.name;
     }
 
     public void setxPos(int xPos) {
