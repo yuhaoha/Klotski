@@ -16,7 +16,7 @@ public class LevelListAdapter extends
         RecyclerView.Adapter<LevelListAdapter.LevelViewHolder> {
 
     // 要展示的level内容
-    private final LinkedList<String> mWordList;
+    private final LinkedList<Level> mLevelList;
     private final LayoutInflater mInflater;
     private Context mContext;
 
@@ -24,8 +24,10 @@ public class LevelListAdapter extends
     class LevelViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-        // 获取level_item中的 TextView,即显示关卡名称
+        // 获取level_item中的 TextView,即显示关卡名称，最佳成绩，描述
         private final TextView levelItemView;
+        private final TextView levelBestScore;
+        private final TextView levelDescription;
         // Adapter对象
         final LevelListAdapter mAdapter;
 
@@ -36,6 +38,8 @@ public class LevelListAdapter extends
 
             // level_ite.xml中找到对应的textView
             levelItemView = itemView.findViewById(R.id.levelTitle);
+            levelBestScore = itemView.findViewById(R.id.bestScore);
+            levelDescription = itemView.findViewById(R.id.levelDescription);
             this.mAdapter = adapter;
             // 为itemview监听点击事件
             itemView.setOnClickListener(this);
@@ -55,10 +59,10 @@ public class LevelListAdapter extends
     }
 
     // Adapter构造函数，传递过来上下文和关卡列表
-    public LevelListAdapter(Context context, LinkedList<String> wordList) {
+    public LevelListAdapter(Context context, LinkedList<Level> levelList) {
         // 根据传过来的上下文给mInflater赋值
         mInflater = LayoutInflater.from(context);
-        this.mWordList = wordList;
+        this.mLevelList = levelList;
         //设置上下文环境
         this.mContext = context;
     }
@@ -77,15 +81,19 @@ public class LevelListAdapter extends
     @Override
     public void onBindViewHolder(LevelListAdapter.LevelViewHolder holder,
                                  int position) {
-        // 逐个获取level标题
-        String levelTitle = mWordList.get(position);
+        // 逐个获取level标题，最佳成绩，描述
+        String levelTitle = mLevelList.get(position).getTitle();
+        String bestScore = mLevelList.get(position).getBestScore();
+        String levelDescription = mLevelList.get(position).getDescription();
         // 通过holder修改值
         holder.levelItemView.setText(levelTitle);
+        holder.levelBestScore.setText(bestScore);
+        holder.levelDescription.setText(levelDescription);
     }
 
     // 返回关卡链表的大小
     @Override
     public int getItemCount() {
-        return mWordList.size();
+        return mLevelList.size();
     }
 }

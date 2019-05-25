@@ -7,12 +7,6 @@
     android:orientation="vertical"
     tools:context=".ChooseLevel">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        style="@style/level_title"
-        android:text="请选择关卡"/>
 
     <!--关卡布局主体是一个RecyclerView-->
     <android.support.v7.widget.RecyclerView
