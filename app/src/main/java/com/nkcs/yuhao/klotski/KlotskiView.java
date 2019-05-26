@@ -34,7 +34,7 @@ import java.util.Stack;
 
 public class KlotskiView extends View implements View.OnTouchListener,GestureDetector.OnGestureListener
 {
-    private final int SIZE = 200;
+    private  int SIZE ;
     private final int MARGIN = 10;
     private int level =1;
     private PlayBoard playBoard ; //当前的游戏板
@@ -165,18 +165,32 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
         setSteps();
     }
 
+    /**
+     * 182,180,194 背景
+     * 209,209,209 胜利
+     * 170,201,206 曹操
+     * 229,193,205 else
+     *
+     * 橙色 255,221,148
+     * 紫色 182,227,206
+     */
+
     @Override
     public void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);
         // 为自定义View设置背景
-        this.setBackgroundResource(R.drawable.gameboard_background);
-        // 画胜利区域
+        // this.setBackgroundResource(R.drawable.gameboard_background);
+        // 画游戏区域背景
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.FILL_AND_STROKE); //描边且填充
-        RectF rect = new RectF(SIZE*1,SIZE*3,SIZE*3,SIZE*5);
-        paint.setARGB(230,255,255,224);
+        RectF rect = new RectF(0,0,SIZE*4,SIZE*5);
+        paint.setARGB(255,204,171,219);
         canvas.drawRoundRect(rect,50,50,paint);
+        // 画胜利区域
+        rect = new RectF(SIZE*1,SIZE*3,SIZE*3,SIZE*5);
+        paint.setARGB(150,255,221,148);
+//        canvas.drawRoundRect(rect,50,50,paint);
         // 依次画每个人物
         Enumeration<Fragment> enumeration = playBoard.fragmentHashtable.elements();
         while(enumeration.hasMoreElements())
@@ -205,9 +219,9 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
         canvas.drawRoundRect(rect,50,50,paint);
         // 内层矩形
         if(fragment.getValue()==1) //曹操设置成绿色
-            paint.setARGB(200,0,250,154);
+            paint.setARGB(255,250,137,123);
         else
-            paint.setARGB(200,203,167,249); // 透明度，RGB
+            paint.setARGB(255,182,227,206); // 透明度，RGB  //
         rect.left += MARGIN;
         rect.right -= MARGIN;
         rect.top += MARGIN;
@@ -232,7 +246,36 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(SIZE*4, SIZE*5);
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);   //获取宽的模式
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec); //获取高的模式
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);   //获取宽的尺寸
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec); //获取高的尺寸
+        Log.v("hello", "宽的模式:"+widthMode);
+        Log.v("hello", "高的模式:"+heightMode);
+        Log.v("hello", "宽的尺寸:"+widthSize);
+        Log.v("hello", "高的尺寸:"+heightSize);
+        // 根据测量值（父控件最多能为子控件提供的）为SIZE赋值，留20%空白
+        SIZE = widthSize/5;
+        int width;
+        int height ;
+        if (widthMode == MeasureSpec.EXACTLY) {
+            //如果match_parent或者具体的值，直接赋值
+            width = widthSize;
+        } else {
+            //如果是wrap_content，我们要得到控件需要多大的尺寸
+            width = SIZE*4;   //控件的宽度
+            Log.v("hello",  "控件的宽度："+width);
+        }
+        //高度跟宽度处理方式一样
+        if (heightMode == MeasureSpec.EXACTLY) {
+            height = heightSize;
+        } else {
+            height = SIZE*5;
+            Log.v("hello", "控件的高度："+height);
+        }
+        //保存测量宽度和测量高度
+        setMeasuredDimension(width, height);
+        // setMeasuredDimension(SIZE*4, SIZE*5);
     }
 
     // 实现OnGestureListener接口
