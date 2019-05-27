@@ -2,8 +2,11 @@ package com.nkcs.yuhao.klotski;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -20,6 +23,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -64,27 +70,7 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
         // 创建新的游戏板
         PlayBoard newPlayBoard =  new PlayBoard(4,5);
         // 根据关卡设置不同布局
-        switch (level)
-        {
-            case 1:
-                // 第1关 添加人物
-                newPlayBoard.fragmentHashtable.put(1,new Fragment("曹操", 1, 2, 2, 1, 0, R.drawable.role_caocao));
-                newPlayBoard.fragmentHashtable.put(2,new Fragment("张飞", 2, 1, 2, 0, 0, R.drawable.role_zhangfei));
-                newPlayBoard.fragmentHashtable.put(3,new Fragment("赵云", 3 , 1, 2, 3, 2, R.drawable.role_zhaoyun));
-                newPlayBoard.fragmentHashtable.put(4,new Fragment("马超", 4, 1, 2, 0, 2, R.drawable.role_machao));
-                newPlayBoard.fragmentHashtable.put(5,new Fragment("黄忠", 5, 1, 2, 3, 0, R.drawable.role_huangzhong));
-                newPlayBoard.fragmentHashtable.put(6,new Fragment("关羽", 6, 2, 1, 1, 2, R.drawable.role_guanyu));
-                newPlayBoard.fragmentHashtable.put(7,new Fragment("兵", 7, 1, 1, 0, 4, R.drawable.role_soldier));
-                newPlayBoard.fragmentHashtable.put(8,new Fragment("兵", 8, 1, 1, 3, 4, R.drawable.role_soldier));
-                newPlayBoard.fragmentHashtable.put(9,new Fragment("兵", 9, 1, 1, 1, 3, R.drawable.role_soldier));
-                newPlayBoard.fragmentHashtable.put(10,new Fragment("兵", 10, 1, 1, 2, 3, R.drawable.role_soldier));
-                break;
-            case 2:
-                // 设置布局，代表10个人物的(x,y)坐标
-                Point [] points = {new Point(1,0),new Point(0,0),new Point(3,0),new Point(0,3),new Point(3,3),new Point(1,2),new Point(0,2),new Point(3,2),new Point(1,3),new Point(2,3)};
-                // 加入到playBoard
-                newPlayBoard.addFragmentToPlayBoard(points);
-        }
+        newPlayBoard.fragmentHashtable=DatabaseHelper.getLayoutObject(level);
         // 呈现在游戏板上
         Enumeration<Fragment> enumeration =  newPlayBoard.fragmentHashtable.elements();
         while(enumeration.hasMoreElements())
@@ -228,18 +214,6 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
         rect.bottom -= MARGIN;
         canvas.drawRoundRect(rect,50,50,paint);
 
-
-//        String name = fragment.getName();
-//        paint.setColor(Color.BLACK);
-//        canvas.drawText(name,fragment.getxPos(),fragment.getyPos(),paint);
-
-//        // 获取人物对应的图片
-//        InputStream is = this.getContext().getResources().openRawResource(fragment.getPicture());
-//        BitmapDrawable bmpDraw = new BitmapDrawable(is);//下划线在腰上，疑似旧的API可以被新的代替，但是也能用
-//        // 生成位图
-//        Bitmap mPic = bmpDraw.getBitmap();
-//        // 绘图
-//        canvas.drawBitmap(mPic, null, rect, paint);
     }
 
      // 设置组件大小
@@ -398,24 +372,6 @@ class PlayBoard implements Serializable {
         return MyUtil.clone(pb);
     }
 
-    // 向游戏板中添加人物块
-    //人物顺序固定，1曹操、2张飞、3赵云、4马超、5黄忠、6关羽、7-10小兵
-    // name,value,width,heigth,mpicture不变，仅xPos,yPos改变
-    void addFragmentToPlayBoard(Point[] points)
-    {
-        // 向游戏板加入10个人物块
-        this.fragmentHashtable.put(1,new Fragment("Cao Cao", 1, 2, 2, points[0].x, points[0].y, R.drawable.role_caocao));
-        this.fragmentHashtable.put(2,new Fragment("Zhang Fei", 2, 1, 2, points[1].x, points[1].y, R.drawable.role_zhangfei));
-        this.fragmentHashtable.put(3,new Fragment("Zhao Yun", 3 , 1, 2,points[2].x, points[2].y, R.drawable.role_zhaoyun));
-        this.fragmentHashtable.put(4,new Fragment("Ma Chao", 4, 1, 2,points[3].x, points[3].y, R.drawable.role_machao));
-        this.fragmentHashtable.put(5,new Fragment("Huang Zhong", 5, 1, 2, points[4].x, points[4].y, R.drawable.role_huangzhong));
-        this.fragmentHashtable.put(6,new Fragment("Guan Yu", 6, 2, 1,points[5].x, points[5].y, R.drawable.role_guanyu));
-        this.fragmentHashtable.put(7,new Fragment("Soldier1", 7, 1, 1, points[6].x, points[6].y, R.drawable.role_soldier));
-        this.fragmentHashtable.put(8,new Fragment("Soldier2", 8, 1, 1, points[7].x, points[7].y, R.drawable.role_soldier));
-        this.fragmentHashtable.put(9,new Fragment("Soldier3", 9, 1, 1, points[8].x, points[8].y, R.drawable.role_soldier));
-        this.fragmentHashtable.put(10,new Fragment("Soldier4", 10, 1, 1, points[9].x, points[9].y, R.drawable.role_soldier));
-    }
-
     // 为游戏板设置人物块的数值
     void setFragmentValue(Fragment fragment)
     {
@@ -545,9 +501,20 @@ class Fragment implements Serializable{
     private int xPos = 0;
     private int yPos = 0;
     private int value;  //标识每一个块
-    private int mPicture;
 
-    public Fragment(String name, int value, int width, int height, int xPos, int yPos, int mPicture)
+    @Override
+    public String toString() {
+        return "Fragment{" +
+                "name='" + name + '\'' +
+                ", width=" + width +
+                ", height=" + height +
+                ", xPos=" + xPos +
+                ", yPos=" + yPos +
+                ", value=" + value +
+                '}';
+    }
+
+    public Fragment(String name, int value, int width, int height, int xPos, int yPos)
     {
         this.name = name;
         this.width = width;
@@ -555,7 +522,6 @@ class Fragment implements Serializable{
         this.value = value;
         this.xPos = xPos;
         this.yPos = yPos;
-        this.mPicture = mPicture;
     }
 
     public String getName(){
@@ -590,9 +556,6 @@ class Fragment implements Serializable{
         return height;
     }
 
-    public int getPicture(){
-        return mPicture;
-    }
 }
 
 class MyUtil {
@@ -607,17 +570,5 @@ class MyUtil {
         ByteArrayInputStream bin = new ByteArrayInputStream(bout.toByteArray());
         ObjectInputStream ois = new ObjectInputStream(bin);
         return (T) ois.readObject();
-    }
-}
-
-// 每个点的类
-class Point
-{
-    int x; //横坐标
-    int y; //纵坐标
-    Point(int x,int y)
-    {
-        this.x = x;
-        this.y = y;
     }
 }

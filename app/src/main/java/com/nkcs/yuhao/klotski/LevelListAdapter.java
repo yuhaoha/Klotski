@@ -48,12 +48,15 @@ public class LevelListAdapter extends
         //监听点击事件，进入点击的关卡
         @Override
         public void onClick(View view) {
-            // 获取点击item的位置，这个是API提供的函数
-            int mPosition = getLayoutPosition()+1;
-            // 跳转到游戏界面，传递level值
+            // 获取点击item的位置，这个是API提供的函数 0为下标的开始
+            int mPosition = getLayoutPosition();
+            // 跳转到游戏界面，传递level值，关卡名，最佳成绩
+            String levelTitle = mLevelList.get(mPosition).getTitle();
+            int bestScore = mLevelList.get(mPosition).getBestScore();
             Intent intent = new Intent(mContext,PlayGame.class);
-            String LevelExtra = "Level";
-            intent.putExtra(LevelExtra,mPosition);
+            intent.putExtra("levelId",mPosition+1);
+            intent.putExtra("levelTitle",levelTitle);
+            intent.putExtra("bestScore",bestScore);
             mContext.startActivity(intent);
         }
     }
@@ -82,12 +85,16 @@ public class LevelListAdapter extends
     public void onBindViewHolder(LevelListAdapter.LevelViewHolder holder,
                                  int position) {
         // 逐个获取level标题，最佳成绩，描述
+        int levelId = mLevelList.get(position).getLevelId();
         String levelTitle = mLevelList.get(position).getTitle();
-        String bestScore = mLevelList.get(position).getBestScore();
+        int bestScore = mLevelList.get(position).getBestScore();
         String levelDescription = mLevelList.get(position).getDescription();
         // 通过holder修改值
-        holder.levelItemView.setText(levelTitle);
-        holder.levelBestScore.setText(bestScore);
+        holder.levelItemView.setText("第"+levelId+"关:"+levelTitle);
+        if(bestScore==9999)
+            holder.levelBestScore.setText("最佳成绩:暂无");
+        else
+            holder.levelBestScore.setText("最佳成绩："+bestScore);
         holder.levelDescription.setText(levelDescription);
     }
 

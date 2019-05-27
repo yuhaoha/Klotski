@@ -17,8 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:fontFamily="@font/xingshu"
-        android:textSize="40dp"
-        android:text="横刀立马"/>
+        android:textSize="40dp" />
 
     <!--游戏界面-->
     <com.nkcs.yuhao.klotski.KlotskiView

@@ -16,10 +16,11 @@ public class PlayGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 获取关卡数值
+        // 获取关卡数值 最佳成绩 关卡名
         Intent intent = getIntent();
-        String LevelExtra = "Level";
-        int level = intent.getIntExtra(LevelExtra,1);
+        int level = intent.getIntExtra("levelId",1);
+        int bestScore = intent.getIntExtra("bestScore",9999);
+        String levelTitle = intent.getStringExtra("levelTitle");
         // 设置关卡
 //        setGameLevel(level);
         // 设置布局，要在设置关卡之后执行
@@ -27,6 +28,9 @@ public class PlayGame extends AppCompatActivity {
         context = this;
         kv = findViewById(R.id.gameBoard);
         kv.setLevel(level);
+        // 设置关卡名
+        TextView titleView = findViewById(R.id.levelTitleInGame);
+        titleView.setText(levelTitle);
     }
 
     public static Activity getActivity()
