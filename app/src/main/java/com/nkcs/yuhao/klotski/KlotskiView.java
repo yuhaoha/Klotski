@@ -45,7 +45,7 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
     private int level =1;
     private PlayBoard playBoard ; //当前的游戏板
     public int moveTimes = 0; //移动次数
-    public Stack<PlayBoard> states = new Stack<>(); //保存历史状态
+    public Stack<PlayBoard> states = new Stack<PlayBoard>(); //保存历史状态
     // 构建手势探测器为gesture对象赋值,监听自定义view
     GestureDetector mygesture = new GestureDetector(this);
 
@@ -149,6 +149,16 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
         invalidate();
         moveTimes = 0;
         setSteps();
+    }
+
+    // 游戏存档
+    public void saveGameHistory() {
+        String time = Util.getCurrentTime();
+        PlayGame pg = (PlayGame)PlayGame.getActivity(); //获取Activity引用
+        TextView levelTitle = pg.findViewById(R.id.levelTitleInGame);
+        String level_title = (String)levelTitle.getText();
+        // 参数分别为 时间 关卡id 关卡标题 状态栈
+        DatabaseHelper.insertGameHistory(time,level,level_title,states);
     }
 
     /**
@@ -346,6 +356,7 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
         // 点击事件，返回给mygesture处理
         return mygesture.onTouchEvent(motion);
     }
+
 }
 
 

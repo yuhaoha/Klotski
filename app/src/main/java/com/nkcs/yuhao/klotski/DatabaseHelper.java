@@ -12,6 +12,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.Hashtable;
 import java.util.LinkedList;
+import java.util.Stack;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -46,7 +47,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //创建表
         String sql = "CREATE TABLE IF NOT EXISTS level (level_id integer primary key , title varchar(100), description varchar(500),best_score INTEGER,level_layout text)";
         db.execSQL(sql);
-
+        // 创建游戏存档表
+        sql = "CREATE TABLE IF NOT EXISTS game_history (id INTEGER PRIMARY KEY AUTOINCREMENT ,time text, level_id Integer, level_title varchar(100),states text)";
+        db.execSQL(sql);
         // 插入关卡数据
         Point [] points1 = {new Point(1,0,2,2),new Point(0,0,1,2),new Point(3,0,1,2),new Point(0,2,1,2),new Point(3,2,1,2),new Point(1,2,2,1),new Point(0,4,1,1),new Point(3,4,1,1),new Point(1,3,1,1),new Point(2,3,1,1)};
         db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(1,'横刀立马1','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points1)});
@@ -136,6 +139,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return levelList;
 
+    }
+
+    static void insertGameHistory(String time,int level_id,String level_title,Stack<PlayBoard> states)
+    {
+        Gson gson = new Gson();
+        String states_data = gson.toJson(states);
+        DatabaseHelper dbHelper = new DatabaseHelper(PlayGame.getActivity());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.execSQL("insert into game_history(time,level_id,level_title,states) values(?,?,?,?)",new Object[]{time,level_id,level_title,states_data});
     }
 
 }

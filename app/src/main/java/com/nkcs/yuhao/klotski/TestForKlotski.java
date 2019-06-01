@@ -1,5 +1,9 @@
 package com.nkcs.yuhao.klotski;
 
+import android.provider.ContactsContract;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Stack;
 
@@ -12,9 +16,9 @@ public class TestForKlotski {
     private PlayBoard newPlayBoard = new PlayBoard(4,5);
     public static void main(String[] args) {
         TestForKlotski mytest = new TestForKlotski();
-        mytest.toJson();
-        mytest.getJson();
-
+//        mytest.toJson();
+//        mytest.getJson();
+        System.out.print(Util.getCurrentTime());
     }
 
     private void toJson()

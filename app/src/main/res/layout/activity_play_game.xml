@@ -53,6 +53,13 @@
             android:onClick="lastState"
             android:fontFamily="@font/kaijianti"
             android:text="上一步"/>
+        <Button
+            android:id="@+id/saveGameHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="saveGameHistory"
+            android:fontFamily="@font/kaijianti"
+            android:text="存档"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PlayGame extends AppCompatActivity {
     private static PlayGame context = null; //中介变量
@@ -83,6 +84,20 @@ public class PlayGame extends AppCompatActivity {
         {
             // 调用KlotskiView的方法，重新开始游戏
             kv.replay();
+        }
+        else
+            Log.d("hello","kv==null");
+    }
+
+    // 游戏存档
+    public void saveGameHistory(View view) {
+        if(kv!=null)
+        {
+            // 调用KlotskiView的方法，重新开始游戏
+            kv.saveGameHistory();
+            Toast.makeText(MyApplication.getContext(),
+                    "存档成功",
+                    Toast.LENGTH_SHORT).show();
         }
         else
             Log.d("hello","kv==null");
