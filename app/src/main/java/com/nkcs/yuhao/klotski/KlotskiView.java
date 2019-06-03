@@ -58,12 +58,6 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
         this.level = level;
         Log.d("hello","level="+level);
         // 根据level调整布局
-        initPlayBoard();
-    }
-
-    // 在设置游戏关卡后要改变游戏板
-    private void initPlayBoard()
-    {
         // 将默认（第一关）的游戏板弹出
         if(!states.empty())
             states.clear();
@@ -82,6 +76,20 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
         // 赋值给当前游戏板
         playBoard = newPlayBoard;
         states.push(playBoard);
+        // 绘制游戏板
+        invalidate();
+    }
+
+    // 游戏读档
+    public void loadGameHistory(int id){
+        // 把 时间 level level_title 步数 展示在选择读档界面
+        // 点击后传递id给游戏界面  注意区分得到的intent是choose_level 还是 choose_history
+        // 游戏界面根据setStates 给游戏面板赋值并初始化
+
+        // 在数据库中根据id读取历史记录
+        states = DatabaseHelper.getGameHistory(id);
+        moveTimes = states.size();
+        playBoard = states.peek();
         // 绘制游戏板
         invalidate();
     }
@@ -157,8 +165,8 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
         PlayGame pg = (PlayGame)PlayGame.getActivity(); //获取Activity引用
         TextView levelTitle = pg.findViewById(R.id.levelTitleInGame);
         String level_title = (String)levelTitle.getText();
-        // 参数分别为 时间 关卡id 关卡标题 状态栈
-        DatabaseHelper.insertGameHistory(time,level,level_title,states);
+        // 参数分别为 时间 关卡id 关卡标题 移动次数 状态栈
+        DatabaseHelper.insertGameHistory(new GameHistory(time,level,level_title,moveTimes,states));
     }
 
     /**

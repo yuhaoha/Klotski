@@ -48,7 +48,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String sql = "CREATE TABLE IF NOT EXISTS level (level_id integer primary key , title varchar(100), description varchar(500),best_score INTEGER,level_layout text)";
         db.execSQL(sql);
         // 创建游戏存档表
-        sql = "CREATE TABLE IF NOT EXISTS game_history (id INTEGER PRIMARY KEY AUTOINCREMENT ,time text, level_id Integer, level_title varchar(100),states text)";
+        sql = "CREATE TABLE IF NOT EXISTS game_history (id INTEGER PRIMARY KEY AUTOINCREMENT ,time text, level_id Integer, level_title varchar(100),movetimes Integer,states text)";
         db.execSQL(sql);
         // 插入关卡数据
         Point [] points1 = {new Point(1,0,2,2),new Point(0,0,1,2),new Point(3,0,1,2),new Point(0,2,1,2),new Point(3,2,1,2),new Point(1,2,2,1),new Point(0,4,1,1),new Point(3,4,1,1),new Point(1,3,1,1),new Point(2,3,1,1)};
@@ -141,13 +141,56 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    static void insertGameHistory(String time,int level_id,String level_title,Stack<PlayBoard> states)
+    static void insertGameHistory(GameHistory gh)
     {
+        String time = gh.time;
+        int level_id = gh.level;
+        String level_title = gh.levelTitle;
+        int movetimes = gh.moveTimes;
+        Stack<PlayBoard> states = gh.states;
         Gson gson = new Gson();
         String states_data = gson.toJson(states);
         DatabaseHelper dbHelper = new DatabaseHelper(PlayGame.getActivity());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.execSQL("insert into game_history(time,level_id,level_title,states) values(?,?,?,?)",new Object[]{time,level_id,level_title,states_data});
+        db.execSQL("insert into game_history(time,level_id,level_title,movetimes,states) values(?,?,?,?,?)",new Object[]{time,level_id,level_title,movetimes,states_data});
+    }
+
+    // 获取历史记录列表 包含 id time level levelTitle moveTimes属性
+    static LinkedList<GameHistory> getGameHistoryList()
+    {
+        // 初始化要显示的内容 从数据库取数据
+        LinkedList<GameHistory> historyList = new LinkedList<>();
+        DatabaseHelper dbHelper = new DatabaseHelper(MainActivity.getActivity());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select * from game_history order by time desc",null);
+        while (cursor.moveToNext())
+        {
+            GameHistory gh = new GameHistory(cursor.getInt(0),cursor.getString(1),cursor.getInt(2),cursor.getString(3),cursor.getInt(4));
+            historyList.addLast(gh);
+        }
+        cursor.close();
+        db.close();
+        return historyList;
+    }
+
+    // 根据历史记录id获取保存的状态栈
+    static Stack<PlayBoard> getGameHistory(int id)
+    {
+        String data="";
+        DatabaseHelper dbHelper = new DatabaseHelper(PlayGame.getActivity());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        // 查询id对应的Stack<PlayBoard>对象
+        Cursor cursor = db.rawQuery("select * from game_history where id=?",new String[]{id+""});
+        while (cursor.moveToNext())
+            data = cursor.getString(5);
+        Log.d("hello","data="+data);
+        cursor.close();
+        db.close();
+        // 解析数据
+        Gson gson = new Gson();
+        Stack<PlayBoard> states;
+        states = gson.fromJson(data,  new TypeToken<Stack<PlayBoard>>() {}.getType());
+        return states;
     }
 
 }

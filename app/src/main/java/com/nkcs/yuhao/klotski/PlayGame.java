@@ -19,19 +19,31 @@ public class PlayGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // 获取关卡数值 最佳成绩 关卡名
         Intent intent = getIntent();
-        int level = intent.getIntExtra("levelId",1);
-        int bestScore = intent.getIntExtra("bestScore",9999);
-        String levelTitle = intent.getStringExtra("levelTitle");
-        // 设置关卡
-//        setGameLevel(level);
-        // 设置布局，要在设置关卡之后执行
-        setContentView(R.layout.activity_play_game);
-        context = this;
-        kv = findViewById(R.id.gameBoard);
-        kv.setLevel(level);
-        // 设置关卡名
-        TextView titleView = findViewById(R.id.levelTitleInGame);
-        titleView.setText(levelTitle);
+        String activityName = intent.getStringExtra("activityName");
+        // 从选择关卡页面进入游戏
+        if(activityName.equals("ChooseLevel"))
+        {
+            int level = intent.getIntExtra("levelId",1);
+            int bestScore = intent.getIntExtra("bestScore",9999);
+            String levelTitle = intent.getStringExtra("levelTitle");
+            // 设置布局，要在设置关卡之后执行
+            setContentView(R.layout.activity_play_game);
+            context = this;
+            kv = findViewById(R.id.gameBoard);
+            kv.setLevel(level);
+            // 设置关卡名
+            TextView titleView = findViewById(R.id.levelTitleInGame);
+            titleView.setText(levelTitle);
+        }
+        // 从读取存档页面进入游戏
+        else
+        {
+            setContentView(R.layout.activity_play_game);
+            context = this;
+            kv = findViewById(R.id.gameBoard);
+            // 设置传过来的游戏记录id
+            kv.loadGameHistory(1);
+        }
     }
 
     public static Activity getActivity()

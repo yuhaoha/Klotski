@@ -54,6 +54,7 @@ public class LevelListAdapter extends
             String levelTitle = mLevelList.get(mPosition).getTitle();
             int bestScore = mLevelList.get(mPosition).getBestScore();
             Intent intent = new Intent(mContext,PlayGame.class);
+            intent.putExtra("activityName","ChooseLevel");
             intent.putExtra("levelId",mPosition+1);
             intent.putExtra("levelTitle",levelTitle);
             intent.putExtra("bestScore",bestScore);

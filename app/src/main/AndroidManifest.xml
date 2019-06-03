@@ -18,7 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".PlayGame" />
-        <activity android:name=".ChooseLevel"></activity>
+        <activity android:name=".ChooseLevel" />
+        <activity android:name=".ChooseHistory"></activity>
     </application>
 
 </manifest>

@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public void enterGame(View view) {
         // 进入游戏界面
         Intent intent = new Intent(this,PlayGame.class);
+        intent.putExtra("activityName","MainActivity");
         intent.putExtra(LevelExtra,1);
         this.startActivity(intent);
     }
