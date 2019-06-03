@@ -88,7 +88,10 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
 
         // 在数据库中根据id读取历史记录
         states = DatabaseHelper.getGameHistory(id);
-        moveTimes = states.size();
+        // 设置步长
+        moveTimes = states.size()-1;
+        setSteps();
+        // 设置游戏板
         playBoard = states.peek();
         // 绘制游戏板
         invalidate();
@@ -110,7 +113,7 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
     private void judgeVictory()
     {
         // 获取人物块 曹操是1
-        Fragment f = playBoard.fragmentHashtable.get(8); //选一个小兵来测试
+        Fragment f = playBoard.fragmentHashtable.get(1); //选一个小兵来测试 8
         if(f!=null)
         {
             if(f.getxPos()==1&&f.getyPos()==4)
@@ -126,6 +129,7 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
     private void setSteps()
     {
         PlayGame pg = (PlayGame)PlayGame.getActivity(); //获取Activity引用
+        Log.d("hello","in setSteps moveTimes="+moveTimes);
         pg.setMoveTimes(moveTimes);
     }
 

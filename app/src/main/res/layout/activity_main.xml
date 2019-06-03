@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
 
-        <com.dd.processbutton.iml.GenerateProcessButton
-            android:background="@android:color/holo_blue_bright"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:onClick="enterGame"
-            android:text="快速开始"
-            android:layout_margin="20dp"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@android:color/white" />
+    <com.dd.processbutton.iml.GenerateProcessButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:background="@android:color/holo_blue_bright"
+        android:onClick="enterGame"
+        android:text="快速开始"
+        android:textColor="@android:color/white" />
 
-        <com.dd.processbutton.iml.ActionProcessButton
-            android:background="@android:color/holo_blue_bright"
-            android:id="@+id/button"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:onClick="chooseLevel"
-            android:text="选择关卡"
-            android:layout_margin="20dp"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@android:color/white" />
+    <com.dd.processbutton.iml.ActionProcessButton
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:background="@android:color/holo_blue_bright"
+        android:onClick="chooseLevel"
+        android:text="选择关卡"
+        android:textColor="@android:color/white" />
 
-        <com.dd.CircularProgressButton
-            android:background="@android:color/holo_blue_bright"
-            android:id="@+id/loadHistory"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:onClick="loadHistory"
-            android:text="读取存档"
-            android:layout_margin="20dp"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@android:color/white" />
+    <com.dd.processbutton.iml.GenerateProcessButton
+        android:id="@+id/loadHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:background="@android:color/holo_blue_bright"
+        android:onClick="loadHistory"
+        android:text="读取存档"
+        android:textColor="@android:color/white" />
 
-        <com.dd.processbutton.iml.ActionProcessButton
-            android:id="@+id/testme"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:onClick="loadHistory"
-            android:text="读取存档"
-            android:layout_margin="20dp"
-            android:layout_gravity="center_horizontal"/>
-
+    <com.dd.processbutton.iml.GenerateProcessButton
+        android:id="@+id/testme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:onClick="loadHistory"
+        android:text="关于游戏"
+        android:textColor="@android:color/white" />
 
 
 </LinearLayout>

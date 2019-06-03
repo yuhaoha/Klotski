@@ -38,11 +38,17 @@ public class PlayGame extends AppCompatActivity {
         // 从读取存档页面进入游戏
         else
         {
+            int level = intent.getIntExtra("levelId",1);
+            String levelTitle = intent.getStringExtra("levelTitle");
+            int historyId = intent.getIntExtra("historyId",1);
             setContentView(R.layout.activity_play_game);
             context = this;
             kv = findViewById(R.id.gameBoard);
             // 设置传过来的游戏记录id
-            kv.loadGameHistory(1);
+            kv.loadGameHistory(historyId);
+            // 设置关卡名
+            TextView titleView = findViewById(R.id.levelTitleInGame);
+            titleView.setText(levelTitle);
         }
     }
 

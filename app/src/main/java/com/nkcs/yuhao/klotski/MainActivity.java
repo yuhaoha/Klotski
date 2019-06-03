@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
         // 进入游戏界面
         Intent intent = new Intent(this,PlayGame.class);
         intent.putExtra("activityName","MainActivity");
-        intent.putExtra(LevelExtra,1);
+        intent.putExtra("levelId",1);
+        intent.putExtra("levelTitle","横刀立马");
         this.startActivity(intent);
     }
 
@@ -46,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
         this.startActivity(intent);
     }
 
+    // 读取存档
     public void loadHistory(View view) {
-
+        Intent intent = new Intent(this,ChooseHistory.class);
+        this.startActivity(intent);
     }
 }

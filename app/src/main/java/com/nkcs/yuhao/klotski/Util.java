@@ -8,7 +8,7 @@ public class Util {
     {
         long l = System.currentTimeMillis();
         Date date = new Date(l);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String time = dateFormat.format(date);
         return time;
     }

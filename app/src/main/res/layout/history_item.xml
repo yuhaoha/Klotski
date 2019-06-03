@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--使用recyclerView时需要指定布局来盛放它 此处是线性layout manager-->
+<!--每次展示一个item-->
+
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/chooseHistoryBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/choose_level_background"
+            android:adjustViewBounds="true"/>
+
+        <TextView
+            android:id="@+id/historyTitle"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_alignBottom="@id/chooseHistoryBackground"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+
+        <TextView
+            android:id="@+id/historyMovetimes"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/historyTitle"
+            android:textColor="?android:textColorSecondary"
+            android:padding="8dp" />
+
+        <TextView
+            android:id="@+id/historyTime"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/historyMovetimes"
+            android:padding="8dp" />
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

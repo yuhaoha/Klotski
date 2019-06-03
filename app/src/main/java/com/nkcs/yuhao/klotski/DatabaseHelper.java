@@ -162,7 +162,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         LinkedList<GameHistory> historyList = new LinkedList<>();
         DatabaseHelper dbHelper = new DatabaseHelper(MainActivity.getActivity());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select * from game_history order by time desc",null);
+        Cursor cursor = db.rawQuery("select * from game_history order by id desc",null);
         while (cursor.moveToNext())
         {
             GameHistory gh = new GameHistory(cursor.getInt(0),cursor.getString(1),cursor.getInt(2),cursor.getString(3),cursor.getInt(4));
@@ -191,6 +191,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Stack<PlayBoard> states;
         states = gson.fromJson(data,  new TypeToken<Stack<PlayBoard>>() {}.getType());
         return states;
+    }
+
+    static void deleteGameHistory(int id)
+    {
+        DatabaseHelper dbHelper = new DatabaseHelper(ChooseHistory.getActivity());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.execSQL("DELETE FROM game_history WHERE id =?",new String[]{id+""});
     }
 
 }
