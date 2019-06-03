@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
 
-        <Button
+        <com.dd.processbutton.iml.GenerateProcessButton
             android:background="@android:color/holo_blue_bright"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
@@ -18,7 +18,7 @@
             android:layout_gravity="center_horizontal"
             android:textColor="@android:color/white" />
 
-        <Button
+        <com.dd.processbutton.iml.ActionProcessButton
             android:background="@android:color/holo_blue_bright"
             android:id="@+id/button"
             android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
             android:layout_gravity="center_horizontal"
             android:textColor="@android:color/white" />
 
-        <Button
+        <com.dd.CircularProgressButton
             android:background="@android:color/holo_blue_bright"
             android:id="@+id/loadHistory"
             android:layout_height="wrap_content"
@@ -39,6 +39,16 @@
             android:layout_margin="20dp"
             android:layout_gravity="center_horizontal"
             android:textColor="@android:color/white" />
+
+        <com.dd.processbutton.iml.ActionProcessButton
+            android:id="@+id/testme"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:onClick="loadHistory"
+            android:text="读取存档"
+            android:layout_margin="20dp"
+            android:layout_gravity="center_horizontal"/>
+
 
 
 </LinearLayout>
