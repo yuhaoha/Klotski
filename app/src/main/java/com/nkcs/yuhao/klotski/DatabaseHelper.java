@@ -104,6 +104,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
+    // 根据传入的等级返回对应的布局
     static Hashtable<Integer,Fragment> getLayoutObject(int level)
     {
         String data="";
@@ -123,6 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return newFragmentHashTable;
     }
 
+    // 获取关卡列表
     static LinkedList<Level> getLevelListObject()
     {
         // 初始化要显示的内容 从数据库取数据
@@ -141,6 +143,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    // 插入游戏存档
     static void insertGameHistory(GameHistory gh)
     {
         String time = gh.time;
@@ -193,11 +196,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return states;
     }
 
+    // 删除游戏存档记录
     static void deleteGameHistory(int id)
     {
         DatabaseHelper dbHelper = new DatabaseHelper(ChooseHistory.getActivity());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("DELETE FROM game_history WHERE id =?",new String[]{id+""});
+    }
+
+    // 游戏胜利后插入新的成绩（如果比最佳成绩好）
+    static int updateToLevel(int level,int score)
+    {
+        DatabaseHelper dbHelper = new DatabaseHelper(PlayGame.getActivity());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int oldBestScore = DatabaseHelper.getLevel(level).getBestScore();
+        if(score<oldBestScore)
+        {
+            db.execSQL("UPDATE level SET best_score = ? WHERE level_id = ?;",new String[]{score+"",level+""});
+            return score;
+        }
+        else
+            return oldBestScore;
+    }
+
+    // 获得level id对应的level对象
+    static Level getLevel(int id)
+    {
+        Level level = new Level();
+        DatabaseHelper dbHelper = new DatabaseHelper(PlayGame.getActivity());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        // 查询id对应的Stack<PlayBoard>对象
+        Cursor cursor = db.rawQuery("select * from level where level_id=?",new String[]{id+""});
+        while (cursor.moveToNext())
+            level = new Level(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getInt(3));
+        cursor.close();
+        db.close();
+        return level;
     }
 
 }

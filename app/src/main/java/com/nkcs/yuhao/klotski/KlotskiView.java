@@ -14,6 +14,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
+import android.provider.ContactsContract;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -24,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.eminayar.panter.PanterDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -91,6 +93,8 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
         // 设置步长
         moveTimes = states.size()-1;
         setSteps();
+        // 设置level
+        this.level = PlayGame.getLevel();
         // 设置游戏板
         playBoard = states.peek();
         // 绘制游戏板
@@ -113,16 +117,76 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
     private void judgeVictory()
     {
         // 获取人物块 曹操是1
-        Fragment f = playBoard.fragmentHashtable.get(1); //选一个小兵来测试 8
+        Fragment f = playBoard.fragmentHashtable.get(8); //选一个小兵来测试 8
         if(f!=null)
         {
             if(f.getxPos()==1&&f.getyPos()==4)
             {
+                // 获取关卡值对应的对象
+                Level mylevel = DatabaseHelper.getLevel(level);
+                // 返回值为最新的最佳成绩
+                int result = DatabaseHelper.updateToLevel(level,moveTimes);
+                String message = "";
+                if(result==moveTimes)
+                    message+="您创造了新的记录！\n";
+                message += "恭喜您通过第"+level+"关："+mylevel.getTitle()+"\n您的步长是为："+moveTimes;
+//                Intent intent = new Intent(pg,ChooseLevel.class);  //跳转到游戏胜利页面
+//                pg.startActivity(intent);
                 PlayGame pg = (PlayGame)PlayGame.getActivity(); //获取Activity引用
-                Intent intent = new Intent(pg,ChooseLevel.class);  //跳转到游戏胜利页面
-                pg.startActivity(intent);
+                new PanterDialog(pg)
+                        .setHeaderBackground(R.drawable.pattern_bg_blue)
+                        .setTitle("游戏胜利")
+                        .setPositive("下一关", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // 开始下一关
+                                PlayGame pg = (PlayGame)PlayGame.getActivity(); //获取Activity引用
+                                Intent intent = new Intent(pg,PlayGame.class);  //跳转到游戏胜利页面
+                                Level mylevel = DatabaseHelper.getLevel(level+1);
+                                intent.putExtra("activityName","PlayGame");
+                                intent.putExtra("levelId",mylevel.getLevelId());
+                                intent.putExtra("levelTitle",mylevel.getTitle());
+                                intent.putExtra("bestScore",mylevel.getBestScore());
+                                pg.startActivity(intent);
+                                pg.finish();
+                            }
+                        })
+                        .setNegative("再玩一次", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // 重新游戏
+                                //replay()
+                                PlayGame pg = (PlayGame)PlayGame.getActivity(); //获取Activity引用
+                                Intent intent = new Intent(pg,PlayGame.class);  //跳转到游戏胜利页面
+                                Level mylevel = DatabaseHelper.getLevel(level);
+                                intent.putExtra("activityName","PlayGame");
+                                intent.putExtra("levelId",mylevel.getLevelId());
+                                intent.putExtra("levelTitle",mylevel.getTitle());
+                                intent.putExtra("bestScore",mylevel.getBestScore());
+                                pg.startActivity(intent);
+                                pg.finish();
+                            }
+                        })
+                        .setMessage(message)
+                        .isCancelable(false)
+                        .show();
             }
         }
+    }
+
+    // 下一关
+    private void nextLevel()
+    {
+        // 检查是否到了最后一关再执行查询
+        Level nexLevel = DatabaseHelper.getLevel(level+1);
+        this.level = nexLevel.getLevelId();
+        this.moveTimes = 0;
+        setSteps();
+        PlayGame pg = (PlayGame)PlayGame.getActivity(); //获取Activity引用
+        TextView titleView = pg.findViewById(R.id.levelTitleInGame);
+        titleView.setText(nexLevel.getTitle());
+        // 初始化下一个界面
+        this.setLevel(level);
     }
 
     // 设置步长

@@ -56,6 +56,8 @@ class Level
         this.bestScore = bestScore;
     }
 
+    Level(){}
+
     public int getLevelId() {
         return levelId;
     }

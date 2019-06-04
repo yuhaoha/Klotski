@@ -14,6 +14,7 @@ import android.widget.Toast;
 public class PlayGame extends AppCompatActivity {
     private static PlayGame context = null; //中介变量
     KlotskiView kv; //获取Klotski组件引用
+    static int level;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +37,9 @@ public class PlayGame extends AppCompatActivity {
             titleView.setText(levelTitle);
         }
         // 从读取存档页面进入游戏
-        else
+        else if(activityName.equals("ChooseHistory"))
         {
-            int level = intent.getIntExtra("levelId",1);
+            level = intent.getIntExtra("levelId",1);
             String levelTitle = intent.getStringExtra("levelTitle");
             int historyId = intent.getIntExtra("historyId",1);
             setContentView(R.layout.activity_play_game);
@@ -50,13 +51,28 @@ public class PlayGame extends AppCompatActivity {
             TextView titleView = findViewById(R.id.levelTitleInGame);
             titleView.setText(levelTitle);
         }
+        // 点击游戏成功后再次游戏
+        else
+        {
+            int level = intent.getIntExtra("levelId",1);
+            int bestScore = intent.getIntExtra("bestScore",9999);
+            String levelTitle = intent.getStringExtra("levelTitle");
+            // 设置布局，要在设置关卡之后执行
+            setContentView(R.layout.activity_play_game);
+            context = this;
+            kv = findViewById(R.id.gameBoard);
+            kv.setLevel(level);
+            // 设置关卡名
+            TextView titleView = findViewById(R.id.levelTitleInGame);
+            titleView.setText(levelTitle);
+        }
     }
 
     public static Activity getActivity()
     {
         return context;
     }
-
+    public static int getLevel(){return level;}
     // 获取自定义组件的引用
     private void getKlotskiView()
     {
