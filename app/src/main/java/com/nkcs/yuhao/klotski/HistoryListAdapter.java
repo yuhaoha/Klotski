@@ -68,6 +68,8 @@ public class HistoryListAdapter extends
         @Override
         public boolean onLongClick(View v) {
             int mPosition = getLayoutPosition();
+            //长按删除item
+            removeData(mPosition);
             GameHistory gh = mHistoryList.get(mPosition);
             DatabaseHelper.deleteGameHistory(gh.id);
             Toast.makeText(MyApplication.getContext(),
@@ -115,6 +117,12 @@ public class HistoryListAdapter extends
     @Override
     public int getItemCount() {
         return mHistoryList.size();
+    }
+
+    private void removeData(int position) {
+        mHistoryList.remove(position);
+        notifyItemRemoved(position);
+        notifyDataSetChanged();
     }
 }
 

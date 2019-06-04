@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Klotski</string>
+    <string name="about_game">这是一款华容道游戏，界面清新，希望您能喜欢。\n开发者：南开大学软件学院本科生于浩。\n有任何意见请联系邮箱nkyuhao@163.com</string>
+    <string name="exit_game">是否确定退出游戏？</string>
 </resources>

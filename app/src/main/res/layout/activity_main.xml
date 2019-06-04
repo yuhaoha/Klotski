@@ -5,50 +5,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/main_activity_background"
     tools:context=".MainActivity">
-
-
-    <com.dd.processbutton.iml.GenerateProcessButton
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="小清新华容道"
+        android:layout_marginTop="90dp"
+        android:layout_marginBottom="60dp"
+        android:textColor="@android:color/white"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp"
-        android:background="@android:color/holo_blue_bright"
-        android:onClick="enterGame"
-        android:text="快速开始"
-        android:textColor="@android:color/white" />
+        android:textSize="50dp"
+        android:fontFamily="@font/kaijianti" />
 
-    <com.dd.processbutton.iml.ActionProcessButton
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp"
-        android:background="@android:color/holo_blue_bright"
-        android:onClick="chooseLevel"
-        android:text="选择关卡"
-        android:textColor="@android:color/white" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <com.dd.processbutton.iml.ActionProcessButton
+            android:id="@+id/button"
+            android:onClick="chooseLevel"
+            android:text="选择关卡"
+            style="@style/main_activity_button"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"
+            android:textSize="30dp"
+            android:fontFamily="@font/kaijianti"
+            android:textColor="@android:color/white"/>
 
-    <com.dd.processbutton.iml.GenerateProcessButton
-        android:id="@+id/loadHistory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp"
-        android:background="@android:color/holo_blue_bright"
-        android:onClick="loadHistory"
-        android:text="读取存档"
-        android:textColor="@android:color/white" />
+        <com.dd.processbutton.iml.GenerateProcessButton
+            android:id="@+id/loadHistory"
+            android:onClick="loadHistory"
+            android:text="读取存档"
+            style="@style/main_activity_button"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"
+            android:textSize="30dp"
+            android:fontFamily="@font/kaijianti"
+            android:textColor="@android:color/white"/>
 
-    <com.dd.processbutton.iml.GenerateProcessButton
-        android:id="@+id/testme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp"
-        android:onClick="loadHistory"
-        android:text="关于游戏"
-        android:textColor="@android:color/white" />
+        <com.dd.processbutton.iml.GenerateProcessButton
+            android:onClick="aboutGame"
+            android:text="关于游戏"
+            style="@style/main_activity_button"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"
+            android:textSize="30dp"
+            android:fontFamily="@font/kaijianti"
+            android:textColor="@android:color/white"/>
 
+        <com.dd.processbutton.iml.GenerateProcessButton
+            android:onClick="exitGame"
+            android:text="退出游戏"
+            style="@style/main_activity_button"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"
+            android:textSize="30dp"
+            android:fontFamily="@font/kaijianti"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
 
 </LinearLayout>
