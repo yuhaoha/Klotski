@@ -10,14 +10,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/chooseLevelBackground"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/choose_level_background"
-            android:adjustViewBounds="true"/>
+        android:layout_height="120dp"
+        android:background="@drawable/level_item_background">
 
         <TextView
             android:id="@+id/levelTitle"
@@ -25,7 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:layout_alignBottom="@id/chooseLevelBackground"
+            android:fontFamily="@font/kaijianti"
+            android:textColor="@android:color/black"
             android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
         <TextView
@@ -34,7 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/levelTitle"
-            android:textColor="?android:textColorSecondary"
+            android:fontFamily="@font/kaijianti"
+            android:textColor="@android:color/black"
             android:padding="8dp" />
 
         <TextView
@@ -43,6 +39,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/bestScore"
+            android:fontFamily="@font/kaijianti"
+            android:textColor="@android:color/black"
             android:padding="8dp" />
 
     </RelativeLayout>
