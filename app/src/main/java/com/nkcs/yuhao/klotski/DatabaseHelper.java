@@ -50,30 +50,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // 创建游戏存档表
         sql = "CREATE TABLE IF NOT EXISTS game_history (id INTEGER PRIMARY KEY AUTOINCREMENT ,time text, level_id Integer, level_title varchar(100),movetimes Integer,states text)";
         db.execSQL(sql);
-        // 插入关卡数据
+        // 插入关卡数据                 //曹操                                     //张飞                                   //赵云                                    //马超                                    //黄忠                                    // 关羽                                   //兵1                                      //兵2                                    //兵3                                    // 兵4
         Point [] points1 = {new Point(1,0,2,2),new Point(0,0,1,2),new Point(3,0,1,2),new Point(0,2,1,2),new Point(3,2,1,2),new Point(1,2,2,1),new Point(0,4,1,1),new Point(3,4,1,1),new Point(1,3,1,1),new Point(2,3,1,1)};
-        db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(1,'横刀立马','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points1)});
+        db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(1,'小试牛刀','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points1)});
         Point [] points2 = {new Point(1,0,2,2),new Point(0,0,1,2),new Point(3,0,1,2),new Point(0,3,1,2),new Point(3,3,1,2),new Point(1,2,2,1),new Point(0,2,1,1),new Point(3,2,1,1),new Point(1,3,1,1),new Point(2,3,1,1)};
-        db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(2,'小试牛刀','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points2)});
-        Point [] points3 = {new Point(1,0,2,2),new Point(0,0,1,2),new Point(3,0,1,2),new Point(0,3,1,2),new Point(3,3,1,2),new Point(1,2,2,1),new Point(0,2,1,1),new Point(3,2,1,1),new Point(1,3,1,1),new Point(2,3,1,1)};
+        db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(2,'横刀立马','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points2)});
+        Point [] points3 = {new Point(1,0,2,2),new Point(0,0,1,2),new Point(3,0,1,2),new Point(0,3,1,2),new Point(3,3,1,2),new Point(1,3,2,1),new Point(0,2,1,1),new Point(1,2,1,1),new Point(2,2,1,1),new Point(3,2,1,1)};
         db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(3,'齐头并前','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points3)});
-        db.execSQL("insert into level(level_id,title,description,best_score) values(4,'兵分三路','曹操能否逃脱，请拭目以待',9999)");
-        db.execSQL("insert into level(level_id,title,description,best_score) values(5,'屯兵东路','曹操能否逃脱，请拭目以待',9999)");
-        db.execSQL("insert into level(level_id,title,description,best_score) values(6,'左右布兵','曹操能否逃脱，请拭目以待',9999)");
-        db.execSQL("insert into level(level_id,title,description,best_score) values(7,'前挡后阻','曹操能否逃脱，请拭目以待',9999)");
-        db.execSQL("insert into level(level_id,title,description,best_score) values(8,'插翅难飞','曹操能否逃脱，请拭目以待',9999)");
-        db.execSQL("insert into level(level_id,title,description,best_score) values(9,'近在咫尺','曹操能否逃脱，请拭目以待',9999)");
-        db.execSQL("insert into level(level_id,title,description,best_score) values(10,'层层设防','曹操能否逃脱，请拭目以待',9999)");
-        db.execSQL("insert into level(level_id,title,description,best_score) values(11,'水泄不通','曹操能否逃脱，请拭目以待',9999)");
-        db.execSQL("insert into level(level_id,title,description,best_score) values(12,'小燕出巢','曹操能否逃脱，请拭目以待',9999)");
-        db.execSQL("insert into level(level_id,title,description,best_score) values(13,'兵挡将阻','曹操能否逃脱，请拭目以待',9999)");
-        db.execSQL("insert into level(level_id,title,description,best_score) values(14,'过五关','曹操能否逃脱，请拭目以待',9999)");
-        db.execSQL("insert into level(level_id,title,description,best_score) values(15,'一夫当关','曹操能否逃脱，请拭目以待',9999)");
-        db.execSQL("insert into level(level_id,title,description,best_score) values(16,'一字长蛇','曹操能否逃脱，请拭目以待',9999)");
-        db.execSQL("insert into level(level_id,title,description,best_score) values(17,'四面楚歌','曹操能否逃脱，请拭目以待',9999)");
-        db.execSQL("insert into level(level_id,title,description,best_score) values(18,'比翼横空','曹操能否逃脱，请拭目以待',9999)");
-        db.execSQL("insert into level(level_id,title,description,best_score) values(19,'兵临曹营','曹操能否逃脱，请拭目以待',9999)");
-        db.execSQL("insert into level(level_id,title,description,best_score) values(20,'逃之夭夭','曹操能否逃脱，请拭目以待',9999)");
+        Point [] points4 = {new Point(1,0,2,2),new Point(0,1,1,2),new Point(3,1,1,2),new Point(0,3,1,2),new Point(3,3,1,2),new Point(1,2,2,1),new Point(0,0,1,1),new Point(3,0,1,1),new Point(1,3,1,1),new Point(2,3,1,1)};
+        db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(4,'兵分三路','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points4)});
+        Point [] points5 = {new Point(0,0,2,2),new Point(2,0,1,2),new Point(3,0,1,2),new Point(0,3,1,2),new Point(1,3,1,2),new Point(0,2,2,1),new Point(2,2,1,1),new Point(3,2,1,1),new Point(3,3,1,1),new Point(2,3,1,1)};
+        db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(5,'屯兵东路','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points5)});
+        Point [] points6 = {new Point(1,0,2,2),new Point(0,0,1,2),new Point(3,0,1,2),new Point(1,2,1,2),new Point(2,2,1,2),new Point(1,4,2,1),new Point(0,3,1,1),new Point(0,4,1,1),new Point(3,3,1,1),new Point(3,4,1,1)};
+        db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(6,'左右布兵','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points6)});
+        Point [] points7 = {new Point(0,0,2,2),new Point(1,4,2,1),new Point(0,2,1,2),new Point(2,1,1,2),new Point(1,2,1,2),new Point(2,0,2,1),new Point(2,3,1,1),new Point(3,3,1,1),new Point(3,1,1,1),new Point(3,2,1,1)};
+        db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(7,'前挡后阻','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points7)});
+        Point [] points8 = {new Point(1,0,2,2),new Point(2,4,2,1),new Point(0,0,1,2),new Point(1,2,1,2),new Point(3,0,1,2),new Point(0,4,2,1),new Point(0,2,1,1),new Point(0,3,1,1),new Point(3,2,1,1),new Point(3,3,1,1)};
+        db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(8,'插翅难飞','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points8)});
+        Point [] points9 = {new Point(2,3,2,2),new Point(0,3,2,1),new Point(1,0,1,2),new Point(2,0,1,2),new Point(3,0,1,2),new Point(0,2,2,1),new Point(0,0,1,1),new Point(0,1,1,1),new Point(2,2,1,1),new Point(3,2,1,1)};
+        db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(9,'近在咫尺','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points9)});
+        Point [] points10 = {new Point(2,0,2,2),new Point(0,1,2,1),new Point(0,2,2,1),new Point(0,3,2,1),new Point(2,2,2,1),new Point(3,3,1,2),new Point(0,4,1,1),new Point(1,4,1,1),new Point(2,4,1,1),new Point(2,3,1,1)};
+        db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(10,'网开一面','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points10)}); //文档21题
+//        db.execSQL("insert into level(level_id,title,description,best_score) values(11,'水泄不通','曹操能否逃脱，请拭目以待',9999)");
+//        db.execSQL("insert into level(level_id,title,description,best_score) values(12,'小燕出巢','曹操能否逃脱，请拭目以待',9999)");
+//        db.execSQL("insert into level(level_id,title,description,best_score) values(13,'兵挡将阻','曹操能否逃脱，请拭目以待',9999)");
+//        db.execSQL("insert into level(level_id,title,description,best_score) values(14,'过五关','曹操能否逃脱，请拭目以待',9999)");
+//        db.execSQL("insert into level(level_id,title,description,best_score) values(15,'一夫当关','曹操能否逃脱，请拭目以待',9999)");
+//        db.execSQL("insert into level(level_id,title,description,best_score) values(16,'一字长蛇','曹操能否逃脱，请拭目以待',9999)");
+//        db.execSQL("insert into level(level_id,title,description,best_score) values(17,'四面楚歌','曹操能否逃脱，请拭目以待',9999)");
+//        db.execSQL("insert into level(level_id,title,description,best_score) values(18,'比翼横空','曹操能否逃脱，请拭目以待',9999)");
+//        db.execSQL("insert into level(level_id,title,description,best_score) values(19,'兵临曹营','曹操能否逃脱，请拭目以待',9999)");
+//        db.execSQL("insert into level(level_id,title,description,best_score) values(20,'逃之夭夭','曹操能否逃脱，请拭目以待',9999)");
 
     }
 
@@ -89,16 +96,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     {
         // 向游戏板加入10个人物块
         Hashtable<Integer,Fragment> fragmentHashtable = new Hashtable<>();
-        fragmentHashtable.put(1,new Fragment("Cao Cao", 1, 2, 2, points[0].x, points[0].y));
-        fragmentHashtable.put(2,new Fragment("Zhang Fei", 2, 1, 2, points[1].x, points[1].y));
-        fragmentHashtable.put(3,new Fragment("Zhao Yun", 3 , 1, 2,points[2].x, points[2].y));
-        fragmentHashtable.put(4,new Fragment("Ma Chao", 4, 1, 2,points[3].x, points[3].y));
-        fragmentHashtable.put(5,new Fragment("Huang Zhong", 5, 1, 2, points[4].x, points[4].y));
-        fragmentHashtable.put(6,new Fragment("Guan Yu", 6, 2, 1,points[5].x, points[5].y));
-        fragmentHashtable.put(7,new Fragment("Soldier1", 7, 1, 1, points[6].x, points[6].y));
-        fragmentHashtable.put(8,new Fragment("Soldier2", 8, 1, 1, points[7].x, points[7].y));
-        fragmentHashtable.put(9,new Fragment("Soldier3", 9, 1, 1, points[8].x, points[8].y));
-        fragmentHashtable.put(10,new Fragment("Soldier4", 10, 1, 1, points[9].x, points[9].y));
+        fragmentHashtable.put(1,new Fragment("Cao Cao", 1, points[0].width, points[0].heigth, points[0].x, points[0].y));
+        fragmentHashtable.put(2,new Fragment("Zhang Fei", 2,  points[1].width, points[1].heigth, points[1].x, points[1].y));
+        fragmentHashtable.put(3,new Fragment("Zhao Yun", 3 ,  points[2].width, points[2].heigth,points[2].x, points[2].y));
+        fragmentHashtable.put(4,new Fragment("Ma Chao", 4,  points[3].width, points[3].heigth,points[3].x, points[3].y));
+        fragmentHashtable.put(5,new Fragment("Huang Zhong", 5,  points[4].width, points[4].heigth, points[4].x, points[4].y));
+        fragmentHashtable.put(6,new Fragment("Guan Yu", 6,  points[5].width, points[5].heigth,points[5].x, points[5].y));
+        fragmentHashtable.put(7,new Fragment("Soldier1", 7,  points[6].width, points[6].heigth, points[6].x, points[6].y));
+        fragmentHashtable.put(8,new Fragment("Soldier2", 8,  points[7].width, points[7].heigth, points[7].x, points[7].y));
+        fragmentHashtable.put(9,new Fragment("Soldier3", 9,  points[8].width, points[8].heigth, points[8].x, points[8].y));
+        fragmentHashtable.put(10,new Fragment("Soldier4", 10,  points[9].width, points[9].heigth, points[9].x, points[9].y));
         Gson gson = new Gson();
         String data = gson.toJson(fragmentHashtable);
         return data;

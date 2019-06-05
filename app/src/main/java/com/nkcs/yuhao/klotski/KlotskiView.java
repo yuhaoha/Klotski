@@ -171,7 +171,7 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
     void nextLevel()
     {
         // 检查是否到了最后一关再执行查询
-        if(DatabaseHelper.getLevelListObject().size()<=level+1)
+        if(DatabaseHelper.getLevelListObject().size()<level+1)
         {
             toHomePage();
         }
