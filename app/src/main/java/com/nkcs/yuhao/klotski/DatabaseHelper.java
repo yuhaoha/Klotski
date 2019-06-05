@@ -52,9 +52,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(sql);
         // 插入关卡数据
         Point [] points1 = {new Point(1,0,2,2),new Point(0,0,1,2),new Point(3,0,1,2),new Point(0,2,1,2),new Point(3,2,1,2),new Point(1,2,2,1),new Point(0,4,1,1),new Point(3,4,1,1),new Point(1,3,1,1),new Point(2,3,1,1)};
-        db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(1,'横刀立马1','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points1)});
+        db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(1,'横刀立马','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points1)});
         Point [] points2 = {new Point(1,0,2,2),new Point(0,0,1,2),new Point(3,0,1,2),new Point(0,3,1,2),new Point(3,3,1,2),new Point(1,2,2,1),new Point(0,2,1,1),new Point(3,2,1,1),new Point(1,3,1,1),new Point(2,3,1,1)};
-        db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(2,'横刀立马2','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points2)});
+        db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(2,'小试牛刀','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points2)});
         Point [] points3 = {new Point(1,0,2,2),new Point(0,0,1,2),new Point(3,0,1,2),new Point(0,3,1,2),new Point(3,3,1,2),new Point(1,2,2,1),new Point(0,2,1,1),new Point(3,2,1,1),new Point(1,3,1,1),new Point(2,3,1,1)};
         db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(3,'齐头并前','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points3)});
         db.execSQL("insert into level(level_id,title,description,best_score) values(4,'兵分三路','曹操能否逃脱，请拭目以待',9999)");

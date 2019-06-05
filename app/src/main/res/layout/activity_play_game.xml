@@ -13,14 +13,67 @@
         android:layout_gravity="center_vertical"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/levelTitleInGame"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="15dp"
-            android:fontFamily="@font/xingshu"
-            android:textSize="40dp" />
+            android:orientation="horizontal">
+
+            <rjsv.floatingmenu.floatingmenubutton.FloatingMenuButton
+                android:id="@+id/my_floating_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="left"
+                android:layout_marginRight="50dp"
+                android:scaleType="centerInside">
+
+                <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
+                    android:id="@+id/sub_button_previous"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:onClick="enterPreviousLevel"
+                    android:background="@drawable/ic_edit" />
+
+                <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
+                    android:id="@+id/sub_button_next"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:onClick="enterNextLevel"
+                    android:background="@drawable/ic_alert" />
+
+                <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
+                    android:id="@+id/sub_button_home"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:onClick="toHomePage"
+                    android:background="@drawable/ic_favorite" />
+
+                <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
+                    android:id="@+id/sub_button_exit"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:onClick="exitGame"
+                    android:background="@drawable/ic_search" />
+
+                <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
+                    android:id="@+id/sub_button_about"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:onClick="aboutGame"
+                    android:background="@drawable/ic_place" />
+
+            </rjsv.floatingmenu.floatingmenubutton.FloatingMenuButton>
+
+            <TextView
+                android:id="@+id/levelTitleInGame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold"
+                android:layout_margin="15dp"
+                android:fontFamily="@font/xingshu"
+                android:textSize="40dp" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -34,6 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="50dp"
+                android:textStyle="bold"
                 android:fontFamily="@font/kaijianti"
                 android:text="最佳成绩:暂无" />
 
@@ -42,6 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:textStyle="bold"
                 android:fontFamily="@font/kaijianti"
                 android:text="当前步数:0" />
 
@@ -63,76 +118,38 @@
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
 
-            <com.dd.processbutton.iml.GenerateProcessButton
+            <Button
                 android:id="@+id/replay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/kaijianti"
+                android:textStyle="bold"
                 android:onClick="replay"
+                android:background="@color/buttonColor"
                 android:text="重新开始" />
 
-            <com.dd.processbutton.iml.GenerateProcessButton
+            <Button
                 android:id="@+id/previousState"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:fontFamily="@font/kaijianti"
+                android:textStyle="bold"
                 android:onClick="lastState"
+                android:background="@color/buttonColor"
                 android:text="上一步" />
 
-            <com.dd.processbutton.iml.GenerateProcessButton
+            <Button
                 android:id="@+id/saveGameHistory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/kaijianti"
+                android:textStyle="bold"
                 android:onClick="saveGameHistory"
+                android:background="@color/buttonColor"
                 android:text="存档" />
 
         </LinearLayout>
-
-        <rjsv.floatingmenu.floatingmenubutton.FloatingMenuButton
-            android:id="@+id/my_floating_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="right"
-            android:scaleType="centerInside">
-
-            <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
-                android:id="@+id/sub_button_previous"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:onClick="enterPreviousLevel"
-                android:background="@drawable/ic_edit" />
-
-            <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
-                android:id="@+id/sub_button_next"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:onClick="enterNextLevel"
-                android:background="@drawable/ic_alert" />
-
-            <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
-                android:id="@+id/sub_button_home"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:onClick="toHomePage"
-                android:background="@drawable/ic_favorite" />
-
-            <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
-                android:id="@+id/sub_button_exit"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:onClick="exitGame"
-                android:background="@drawable/ic_search" />
-
-            <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
-                android:id="@+id/sub_button_about"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:onClick="aboutGame"
-                android:background="@drawable/ic_place" />
-
-        </rjsv.floatingmenu.floatingmenubutton.FloatingMenuButton>
 
 
     </LinearLayout>

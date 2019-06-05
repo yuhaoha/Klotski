@@ -244,7 +244,7 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.FILL_AND_STROKE); //描边且填充
         RectF rect = new RectF(0,0,SIZE*4,SIZE*5);
-        paint.setARGB(255,204,171,219);
+        paint.setARGB(255,	100,149,237); // 矢车菊的蓝色
         canvas.drawRoundRect(rect,50,50,paint);
         // 画胜利区域
         rect = new RectF(SIZE*1,SIZE*3,SIZE*3,SIZE*5);
@@ -277,10 +277,10 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
         paint.setColor(Color.TRANSPARENT);  // 颜色设置为透明
         canvas.drawRoundRect(rect,50,50,paint);
         // 内层矩形
-        if(fragment.getValue()==1) //曹操设置成绿色
-            paint.setARGB(255,250,137,123);
+        if(fragment.getValue()==1) //曹操
+            paint.setARGB(120,	30,144,255); // 	道奇蓝
         else
-            paint.setARGB(255,182,227,206); // 透明度，RGB  //
+            paint.setARGB(120,135,206,250); // 透明度，RGB  //淡蓝色
         rect.left += MARGIN;
         rect.right -= MARGIN;
         rect.top += MARGIN;
