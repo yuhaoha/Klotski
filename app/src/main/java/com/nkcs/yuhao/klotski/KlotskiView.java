@@ -128,7 +128,7 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
                 int result = DatabaseHelper.updateToLevel(level,moveTimes);
                 String message = "";
                 if(result==moveTimes)
-                    message+="您创造了新的记录！\n";
+                    message+="创造了新的记录！\n";
                 message += "恭喜您通过第"+level+"关："+mylevel.getTitle()+"\n您的步长是为："+moveTimes;
 //                Intent intent = new Intent(pg,ChooseLevel.class);  //跳转到游戏胜利页面
 //                pg.startActivity(intent);
@@ -140,31 +140,13 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
                             @Override
                             public void onClick(View v) {
                                 // 开始下一关
-                                PlayGame pg = (PlayGame)PlayGame.getActivity(); //获取Activity引用
-                                Intent intent = new Intent(pg,PlayGame.class);  //跳转到游戏胜利页面
-                                Level mylevel = DatabaseHelper.getLevel(level+1);
-                                intent.putExtra("activityName","PlayGame");
-                                intent.putExtra("levelId",mylevel.getLevelId());
-                                intent.putExtra("levelTitle",mylevel.getTitle());
-                                intent.putExtra("bestScore",mylevel.getBestScore());
-                                pg.startActivity(intent);
-                                pg.finish();
+                                nextLevel();
                             }
                         })
-                        .setNegative("再玩一次", new View.OnClickListener() {
+                        .setNegative("返回首页", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                // 重新游戏
-                                //replay()
-                                PlayGame pg = (PlayGame)PlayGame.getActivity(); //获取Activity引用
-                                Intent intent = new Intent(pg,PlayGame.class);  //跳转到游戏胜利页面
-                                Level mylevel = DatabaseHelper.getLevel(level);
-                                intent.putExtra("activityName","PlayGame");
-                                intent.putExtra("levelId",mylevel.getLevelId());
-                                intent.putExtra("levelTitle",mylevel.getTitle());
-                                intent.putExtra("bestScore",mylevel.getBestScore());
-                                pg.startActivity(intent);
-                                pg.finish();
+                                toHomePage();
                             }
                         })
                         .setMessage(message)
@@ -174,19 +156,37 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
         }
     }
 
+
+    private void toHomePage()
+    {
+        // 回到首页
+        PlayGame pg = (PlayGame)PlayGame.getActivity(); //获取Activity引用
+        Intent intent = new Intent(pg,MainActivity.class);  //跳转到游戏胜利页面
+        pg.startActivity(intent);
+        pg.finish();
+    }
+
+
     // 下一关
     private void nextLevel()
     {
         // 检查是否到了最后一关再执行查询
-        Level nexLevel = DatabaseHelper.getLevel(level+1);
-        this.level = nexLevel.getLevelId();
-        this.moveTimes = 0;
-        setSteps();
-        PlayGame pg = (PlayGame)PlayGame.getActivity(); //获取Activity引用
-        TextView titleView = pg.findViewById(R.id.levelTitleInGame);
-        titleView.setText(nexLevel.getTitle());
-        // 初始化下一个界面
-        this.setLevel(level);
+        if(DatabaseHelper.getLevelListObject().size()<=level+1)
+        {
+            toHomePage();
+        }
+        else
+        {
+            PlayGame pg = (PlayGame)PlayGame.getActivity(); //获取Activity引用
+            Intent intent = new Intent(pg,PlayGame.class);  //跳转到游戏页面
+            Level mylevel = DatabaseHelper.getLevel(level+1);
+            intent.putExtra("activityName","PlayGame");
+            intent.putExtra("levelId",mylevel.getLevelId());
+            intent.putExtra("levelTitle",mylevel.getTitle());
+            intent.putExtra("bestScore",mylevel.getBestScore());
+            pg.startActivity(intent);
+            pg.finish();
+        }
     }
 
     // 设置步长

@@ -59,6 +59,7 @@ public class LevelListAdapter extends
             intent.putExtra("levelTitle",levelTitle);
             intent.putExtra("bestScore",bestScore);
             mContext.startActivity(intent);
+            ChooseLevel.getActivity().finish();
         }
     }
 

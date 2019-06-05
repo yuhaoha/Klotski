@@ -62,6 +62,7 @@ public class HistoryListAdapter extends
             intent.putExtra("levelTitle",gh.levelTitle);
             intent.putExtra("moveTimes",gh.moveTimes);
             mContext.startActivity(intent);
+            ChooseHistory.getActivity().finish();
         }
 
         // 长按删除存档
