@@ -168,7 +168,7 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
 
 
     // 下一关
-    private void nextLevel()
+    void nextLevel()
     {
         // 检查是否到了最后一关再执行查询
         if(DatabaseHelper.getLevelListObject().size()<=level+1)
@@ -213,19 +213,6 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
         setSteps(); //改变移动步数
     }
 
-    //  重新游戏
-    public void replay()
-    {
-        // 弹出栈内除栈低外所有状态
-        while(states.size()>1)
-        {
-            states.pop();
-        }
-        playBoard = states.peek();
-        invalidate();
-        moveTimes = 0;
-        setSteps();
-    }
 
     // 游戏存档
     public void saveGameHistory() {

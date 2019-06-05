@@ -1,10 +1,15 @@
 package com.nkcs.yuhao.klotski;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.Snackbar;
 import android.os.Bundle;
@@ -15,12 +20,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.imangazaliev.circlemenu.CircleMenu;
-import com.imangazaliev.circlemenu.CircleMenuButton;
+import com.eminayar.panter.PanterDialog;
+
+import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 
 public class PlayGame extends AppCompatActivity {
     private static PlayGame context = null; //中介变量
+    private
     KlotskiView kv; //获取Klotski组件引用
     static int level;
     @Override
@@ -121,7 +130,7 @@ public class PlayGame extends AppCompatActivity {
     public  void setMoveTimes(int  moveTimes)
     {
         TextView tv = findViewById(R.id.moveTimes);
-        tv.setText("总计:"+moveTimes);
+        tv.setText("当前步数:"+moveTimes);
     }
 
     // 点击上一步按钮
@@ -137,26 +146,158 @@ public class PlayGame extends AppCompatActivity {
 
     // 点击重新游戏按钮
     public void replay(View view) {
-        if(kv!=null)
-        {
-            // 调用KlotskiView的方法，重新开始游戏
-            kv.replay();
-        }
-        else
-            Log.d("hello","kv==null");
+        new PanterDialog(PlayGame.getActivity())
+                .setHeaderBackground(R.drawable.pattern_bg_blue)
+                .setTitle("退出游戏")
+                .setPositive("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context,PlayGame.class);
+                        intent.putExtra("activityName","PlayGame");
+                        intent.putExtra("levelId",level);
+                        intent.putExtra("levelTitle",DatabaseHelper.getLevel(level).getTitle());
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegative("我再想想")
+                .setMessage("您的游戏记录可能还未保存,是否确定重新开始?")
+                .isCancelable(false)
+                .show();
     }
 
     // 游戏存档
     public void saveGameHistory(View view) {
         if(kv!=null)
         {
-            // 调用KlotskiView的方法，重新开始游戏
             kv.saveGameHistory();
-            Toast.makeText(MyApplication.getContext(),
-                    "存档成功",
-                    Toast.LENGTH_SHORT).show();
+            // 提示存档成功
+            Toasty.success(MyApplication.getContext(), "存档成功!", Toast.LENGTH_SHORT, true).show();
         }
         else
             Log.d("hello","kv==null");
     }
+
+    // 进入上一关
+    public void enterPreviousLevel(View view) {
+
+        new PanterDialog(this)
+                .setHeaderBackground(R.drawable.pattern_bg_blue)
+                .setTitle("上一关")
+                .setPositive("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // 检查是否到了第一关
+                        if(level-1<=0)
+                        {
+                            Intent intent = new Intent(context,MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else
+                        {
+                            Intent intent = new Intent(context,PlayGame.class);  //跳转到游戏页面
+                            Level mylevel = DatabaseHelper.getLevel(level-1);
+                            intent.putExtra("activityName","PlayGame");
+                            intent.putExtra("levelId",mylevel.getLevelId());
+                            intent.putExtra("levelTitle",mylevel.getTitle());
+                            intent.putExtra("bestScore",mylevel.getBestScore());
+                            context.startActivity(intent);
+                            context.finish();
+                        }
+                    }
+                })
+                .setNegative("我再想想")
+                .setMessage("您的游戏记录可能还未保存,是否确定前往上一关?")
+                .isCancelable(false)
+                .show();
+
+    }
+
+    // 进入下一关
+    public void enterNextLevel(View view) {
+        new PanterDialog(this)
+                .setHeaderBackground(R.drawable.pattern_bg_blue)
+                .setTitle("下一关")
+                .setPositive("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        kv.nextLevel();
+                    }
+                })
+                .setNegative("我再想想")
+                .setMessage("您的游戏记录可能还未保存,是否确定前往下一关?")
+                .isCancelable(false)
+                .show();
+    }
+
+    // 回到首页
+    public void toHomePage(View view) {
+        new PanterDialog(this)
+                .setHeaderBackground(R.drawable.pattern_bg_blue)
+                .setTitle("前往首页")
+                .setPositive("前往首页", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context,MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegative("我再想想")
+                .setMessage("您的游戏记录可能还未保存,是否确定前往首页?")
+                .isCancelable(false)
+                .show();
+    }
+
+    // 关于游戏
+    public void aboutGame(View view) {
+        new PanterDialog(this)
+                .setHeaderBackground(R.drawable.pattern_bg_blue)
+                .setTitle("关于游戏")
+                .setPositive("朕了解了")
+                .setMessage(R.string.about_game)
+                .isCancelable(false)
+                .show();
+    }
+
+    // 退出游戏
+    public void exitGame(View view) {
+        new PanterDialog(this)
+                .setHeaderBackground(R.drawable.pattern_bg_blue)
+                .setTitle("退出游戏")
+                .setPositive("去意已决", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // 结束主界面activity
+                        // finish();
+                        // 彻底关闭app
+                        exitAPP();
+                    }
+                })
+                .setNegative("我再想想")
+                .setMessage(R.string.exit_game)
+                .isCancelable(false)
+                .show();
+    }
+
+    // 退出程序
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void exitAPP() {
+        ActivityManager activityManager = (ActivityManager) context.getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.AppTask> appTaskList = activityManager.getAppTasks();
+        for (ActivityManager.AppTask appTask : appTaskList) {
+            appTask.finishAndRemoveTask();
+        }
+        System.exit(0);
+    }
+
+    // 在点击某个具体的选项后，关闭浮动按钮
+    private void closeFloatingButton()
+    {
+        FloatingActionButton mButton = findViewById(R.id.my_floating_button);
+        
+    }
+
+
 }
