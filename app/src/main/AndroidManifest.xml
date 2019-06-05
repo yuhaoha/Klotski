@@ -19,7 +19,8 @@
         </activity>
         <activity android:name=".PlayGame" />
         <activity android:name=".ChooseLevel" />
-        <activity android:name=".ChooseHistory"></activity>
+        <activity android:name=".ChooseHistory" />
+        <activity android:name=".Test"></activity>
     </application>
 
 </manifest>

@@ -315,7 +315,7 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
         Log.v("hello", "宽的尺寸:"+widthSize);
         Log.v("hello", "高的尺寸:"+heightSize);
         // 根据测量值（父控件最多能为子控件提供的）为SIZE赋值，留20%空白
-        SIZE = widthSize/5;
+        SIZE = widthSize/4;
         int width;
         int height ;
         if (widthMode == MeasureSpec.EXACTLY) {

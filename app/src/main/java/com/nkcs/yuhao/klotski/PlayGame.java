@@ -2,7 +2,11 @@ package com.nkcs.yuhao.klotski;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.Snackbar;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
@@ -10,6 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.imangazaliev.circlemenu.CircleMenu;
+import com.imangazaliev.circlemenu.CircleMenuButton;
+
 
 public class PlayGame extends AppCompatActivity {
     private static PlayGame context = null; //中介变量
@@ -24,8 +32,7 @@ public class PlayGame extends AppCompatActivity {
         // 从选择关卡页面进入游戏
         if(activityName.equals("ChooseLevel"))
         {
-            int level = intent.getIntExtra("levelId",1);
-            int bestScore = intent.getIntExtra("bestScore",9999);
+            level = intent.getIntExtra("levelId",1);
             String levelTitle = intent.getStringExtra("levelTitle");
             // 设置布局，要在设置关卡之后执行
             setContentView(R.layout.activity_play_game);
@@ -35,6 +42,8 @@ public class PlayGame extends AppCompatActivity {
             // 设置关卡名
             TextView titleView = findViewById(R.id.levelTitleInGame);
             titleView.setText(levelTitle);
+            // 设置最佳成绩
+            setBestScore();
         }
         // 从读取存档页面进入游戏
         else if(activityName.equals("ChooseHistory"))
@@ -50,12 +59,13 @@ public class PlayGame extends AppCompatActivity {
             // 设置关卡名
             TextView titleView = findViewById(R.id.levelTitleInGame);
             titleView.setText(levelTitle);
+            // 设置最佳成绩
+            setBestScore();
         }
         // 点击游戏成功后再次游戏
         else
         {
-            int level = intent.getIntExtra("levelId",1);
-            int bestScore = intent.getIntExtra("bestScore",9999);
+            level = intent.getIntExtra("levelId",1);
             String levelTitle = intent.getStringExtra("levelTitle");
             // 设置布局，要在设置关卡之后执行
             setContentView(R.layout.activity_play_game);
@@ -65,7 +75,20 @@ public class PlayGame extends AppCompatActivity {
             // 设置关卡名
             TextView titleView = findViewById(R.id.levelTitleInGame);
             titleView.setText(levelTitle);
+            // 设置最佳成绩
+            setBestScore();
         }
+
+    }
+
+    // 为游戏界面设置最佳成绩
+    private void setBestScore()
+    {
+        Level myLevel = DatabaseHelper.getLevel(level);
+        int bestScore = myLevel.getBestScore();
+        TextView myBestScore = findViewById(R.id.bestScoreInGame);
+        if(bestScore!=9999)
+            myBestScore.setText("最佳成绩:"+bestScore);
     }
 
     public static Activity getActivity()

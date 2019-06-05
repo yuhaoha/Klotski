@@ -90,4 +90,14 @@ class Level
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Level{" +
+                "levelId=" + levelId +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", bestScore=" + bestScore +
+                '}';
+    }
 }

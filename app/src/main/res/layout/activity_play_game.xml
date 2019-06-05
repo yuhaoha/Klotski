@@ -3,63 +3,134 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:orientation="horizontal">-->
-
-    <TextView
-        android:id="@+id/levelTitleInGame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:fontFamily="@font/xingshu"
-        android:textSize="40dp" />
-
-    <!--游戏界面-->
-    <com.nkcs.yuhao.klotski.KlotskiView
-        android:id="@+id/gameBoard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
-
-    <!--</LinearLayout>-->
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/main_activity_background"
+    android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
         <TextView
-            android:id="@+id/moveTimes"
+            android:id="@+id/levelTitleInGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/kaijianti"
-            android:text="总计:0"/>
-        <Button
-            android:id="@+id/replay"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"
+            android:fontFamily="@font/xingshu"
+            android:textSize="40dp" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="replay"
-            android:fontFamily="@font/kaijianti"
-            android:text="重新开始"/>
-        <Button
-            android:id="@+id/previousState"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/bestScoreInGame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="50dp"
+                android:fontFamily="@font/kaijianti"
+                android:text="最佳成绩:暂无" />
+
+            <TextView
+                android:id="@+id/moveTimes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/kaijianti"
+                android:text="当前步数:0" />
+
+        </LinearLayout>
+
+        <!--游戏界面-->
+        <com.nkcs.yuhao.klotski.KlotskiView
+            android:id="@+id/gameBoard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="lastState"
-            android:fontFamily="@font/kaijianti"
-            android:text="上一步"/>
-        <Button
-            android:id="@+id/saveGameHistory"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp" />
+
+        <!--</LinearLayout>-->
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="saveGameHistory"
-            android:fontFamily="@font/kaijianti"
-            android:text="存档"/>
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <com.dd.processbutton.iml.GenerateProcessButton
+                android:id="@+id/replay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kaijianti"
+                android:onClick="replay"
+                android:text="重新开始" />
+
+            <com.dd.processbutton.iml.GenerateProcessButton
+                android:id="@+id/previousState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:fontFamily="@font/kaijianti"
+                android:onClick="lastState"
+                android:text="上一步" />
+
+            <com.dd.processbutton.iml.GenerateProcessButton
+                android:id="@+id/saveGameHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kaijianti"
+                android:onClick="saveGameHistory"
+                android:text="存档" />
+
+        </LinearLayout>
+
+        <rjsv.floatingmenu.floatingmenubutton.FloatingMenuButton
+            android:id="@+id/my_floating_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:scaleType="centerInside">
+
+            <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
+                android:id="@+id/sub_button_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_edit" />
+
+            <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
+                android:id="@+id/sub_button_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_alert" />
+
+            <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
+                android:id="@+id/sub_button_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_favorite" />
+
+            <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
+                android:id="@+id/sub_button_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_search" />
+
+            <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
+                android:id="@+id/sub_button_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_place" />
+
+        </rjsv.floatingmenu.floatingmenubutton.FloatingMenuButton>
+
+
     </LinearLayout>
+
 
 </LinearLayout>
