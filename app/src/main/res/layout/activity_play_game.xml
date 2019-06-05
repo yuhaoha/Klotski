@@ -26,40 +26,41 @@
                 android:layout_marginRight="50dp"
                 android:scaleType="centerInside">
 
-                <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
-                    android:id="@+id/sub_button_previous"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:onClick="enterPreviousLevel"
-                    android:background="@drawable/ic_edit" />
 
                 <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
                     android:id="@+id/sub_button_next"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:onClick="enterNextLevel"
-                    android:background="@drawable/ic_alert" />
-
-                <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
-                    android:id="@+id/sub_button_home"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:onClick="toHomePage"
-                    android:background="@drawable/ic_favorite" />
+                    android:background="@drawable/ic_next" />
 
                 <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
                     android:id="@+id/sub_button_exit"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:onClick="exitGame"
-                    android:background="@drawable/ic_search" />
+                    android:background="@drawable/ic_exit" />
+
+                <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
+                    android:id="@+id/sub_button_home"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:onClick="toHomePage"
+                    android:background="@drawable/ic_home" />
 
                 <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
                     android:id="@+id/sub_button_about"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:onClick="aboutGame"
-                    android:background="@drawable/ic_place" />
+                    android:background="@drawable/ic_about" />
+
+                <rjsv.floatingmenu.floatingmenubutton.subbutton.FloatingSubButton
+                    android:id="@+id/sub_button_previous"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:onClick="enterPreviousLevel"
+                    android:background="@drawable/ic_previous" />
 
             </rjsv.floatingmenu.floatingmenubutton.FloatingMenuButton>
 
