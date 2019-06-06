@@ -117,10 +117,10 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
     private void judgeVictory()
     {
         // 获取人物块 曹操是1
-        Fragment f = playBoard.fragmentHashtable.get(8); //选一个小兵来测试 8
+        Fragment f = playBoard.fragmentHashtable.get(1); //选一个小兵来测试 8
         if(f!=null)
         {
-            if(f.getxPos()==1&&f.getyPos()==4)
+            if(f.getxPos()==1&&f.getyPos()==3)
             {
                 // 获取关卡值对应的对象
                 Level mylevel = DatabaseHelper.getLevel(level);
@@ -278,9 +278,9 @@ public class KlotskiView extends View implements View.OnTouchListener,GestureDet
         canvas.drawRoundRect(rect,50,50,paint);
         // 内层矩形
         if(fragment.getValue()==1) //曹操
-            paint.setARGB(120,	30,144,255); // 	道奇蓝
+            paint.setARGB(170,	30,144,255); // 	道奇蓝
         else
-            paint.setARGB(120,135,206,250); // 透明度，RGB  //淡蓝色
+            paint.setARGB(170,135,206,250); // 透明度，RGB  //淡蓝色
         rect.left += MARGIN;
         rect.right -= MARGIN;
         rect.top += MARGIN;

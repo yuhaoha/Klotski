@@ -51,9 +51,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sql = "CREATE TABLE IF NOT EXISTS game_history (id INTEGER PRIMARY KEY AUTOINCREMENT ,time text, level_id Integer, level_title varchar(100),movetimes Integer,states text)";
         db.execSQL(sql);
         // 插入关卡数据                 //曹操                                     //张飞                                   //赵云                                    //马超                                    //黄忠                                    // 关羽                                   //兵1                                      //兵2                                    //兵3                                    // 兵4
-        Point [] points1 = {new Point(1,0,2,2),new Point(0,0,1,2),new Point(3,0,1,2),new Point(0,2,1,2),new Point(3,2,1,2),new Point(1,2,2,1),new Point(0,4,1,1),new Point(3,4,1,1),new Point(1,3,1,1),new Point(2,3,1,1)};
+        Point [] points1 = {new Point(0,2,2,2),new Point(0,0,1,2),new Point(2,0,1,2),new Point(1,0,1,2),new Point(3,0,1,2),new Point(2,4,2,1),new Point(0,4,1,1),new Point(1,4,1,1),new Point(2,2,1,1),new Point(2,3,1,1)};
         db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(1,'小试牛刀','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points1)});
-        Point [] points2 = {new Point(1,0,2,2),new Point(0,0,1,2),new Point(3,0,1,2),new Point(0,3,1,2),new Point(3,3,1,2),new Point(1,2,2,1),new Point(0,2,1,1),new Point(3,2,1,1),new Point(1,3,1,1),new Point(2,3,1,1)};
+        Point [] points2 = {new Point(1,0,2,2),new Point(0,0,1,2),new Point(3,0,1,2),new Point(0,2,1,2),new Point(3,2,1,2),new Point(1,2,2,1),new Point(0,4,1,1),new Point(3,4,1,1),new Point(1,3,1,1),new Point(2,3,1,1)};
         db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(2,'横刀立马','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points2)});
         Point [] points3 = {new Point(1,0,2,2),new Point(0,0,1,2),new Point(3,0,1,2),new Point(0,3,1,2),new Point(3,3,1,2),new Point(1,3,2,1),new Point(0,2,1,1),new Point(1,2,1,1),new Point(2,2,1,1),new Point(3,2,1,1)};
         db.execSQL("insert into level(level_id,title,description,best_score,level_layout) values(3,'齐头并前','曹操能否逃脱，请拭目以待',9999,?)",new Object[]{getLayoutJson(points3)});

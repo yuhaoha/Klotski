@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">蓝精灵华容道</string>
-    <string name="about_game">这是一款华容道游戏，界面清新，希望您能喜欢。\n开发者：南开大学软件学院本科生于浩。\n有任何意见请联系邮箱nkyuhao@163.com</string>
+    <string name="about_game">“蓝精灵华容道”是一款华容道类游戏，将最大的蓝色块移动到正下方即可获取胜利。本游戏界面清新，有多个关卡供您选择，并且可以游戏存档、读档，希望您能玩得开心\n开发者：南开大学软件学院本科生 于浩\n有任何意见请联系邮箱nkyuhao@163.com</string>
     <string name="exit_game">是否确定退出游戏？</string>
 </resources>
