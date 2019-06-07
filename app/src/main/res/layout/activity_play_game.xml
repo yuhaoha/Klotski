@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/main_activity_background"
     android:orientation="horizontal">
 
@@ -71,6 +72,7 @@
                 android:layout_gravity="center_horizontal"
                 android:textStyle="bold"
                 android:layout_margin="15dp"
+                android:textColor="@android:color/white"
                 android:fontFamily="@font/xingshu"
                 android:textSize="40dp" />
 
@@ -89,6 +91,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="50dp"
                 android:textStyle="bold"
+                android:textColor="@android:color/white"
                 android:fontFamily="@font/kaijianti"
                 android:text="最佳成绩:暂无" />
 
@@ -98,6 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:textStyle="bold"
+                android:textColor="@android:color/white"
                 android:fontFamily="@font/kaijianti"
                 android:text="当前步数:0" />
 
@@ -119,36 +123,74 @@
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
 
-            <Button
+
+            <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/replay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/kaijianti"
-                android:textStyle="bold"
                 android:onClick="replay"
-                android:background="@color/buttonColor"
-                android:text="重新开始" />
+                fancy:fb_text="重玩"
+                fancy:fb_iconResource="@drawable/ic_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kaijianti"
+                android:textStyle="bold"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="@color/buttonColor"
+                fancy:fb_focusColor="#6495ED"
+                fancy:fb_disabledColor="@color/buttonColor"
+                fancy:fb_radius="30dp"
+                fancy:fb_textColor="#FFFFFF" />
 
-            <Button
+
+
+
+            <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/previousState"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:fontFamily="@font/kaijianti"
-                android:textStyle="bold"
                 android:onClick="lastState"
-                android:background="@color/buttonColor"
-                android:text="上一步" />
-
-            <Button
-                android:id="@+id/saveGameHistory"
+                android:layout_marginHorizontal="10dp"
+                fancy:fb_text="后退"
+                fancy:fb_iconResource="@drawable/ic_prestep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/kaijianti"
                 android:textStyle="bold"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="@color/buttonColor"
+                fancy:fb_focusColor="#6495ED"
+                fancy:fb_disabledColor="@color/buttonColor"
+                fancy:fb_radius="30dp"
+                fancy:fb_textColor="#FFFFFF" />
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/saveGameHistory"
                 android:onClick="saveGameHistory"
-                android:background="@color/buttonColor"
-                android:text="存档" />
+                fancy:fb_text="存档"
+                fancy:fb_iconResource="@drawable/ic_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kaijianti"
+                android:textStyle="bold"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="@color/buttonColor"
+                fancy:fb_focusColor="#6495ED"
+                fancy:fb_disabledColor="@color/buttonColor"
+                fancy:fb_radius="30dp"
+                fancy:fb_textColor="#FFFFFF" />
+
 
         </LinearLayout>
 
