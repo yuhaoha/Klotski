@@ -8,6 +8,16 @@
     android:background="@drawable/level_total_background"
     tools:context=".ChooseLevel">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/buttonColor"
+        android:text="选择关卡"
+        android:fontFamily="@font/xingshu"
+        android:textSize="40dp" />
 
     <!--关卡布局主体是一个RecyclerView-->
     <android.support.v7.widget.RecyclerView
